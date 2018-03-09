@@ -15,6 +15,7 @@ public class TestGame {
 
 	public static void main(String args[])
 	{
+		// hello world
 		TestGame game = new TestGame();
 	}
 	
