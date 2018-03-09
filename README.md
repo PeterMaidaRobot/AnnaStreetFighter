@@ -1,2 +1,2 @@
 # AnnaStreetFighter
-Guys being dudes ;)
+a boy and a friend ;)
