@@ -8,7 +8,7 @@ public class TestGame {
 	public TestGame() {
 		
 		JFrame frame = new JFrame();
-		frame.setPreferredSize(new Dimension(600, 1000));
+		frame.setSize(new Dimension(800, 600));
 		frame.setVisible(true);
 		
 	}
