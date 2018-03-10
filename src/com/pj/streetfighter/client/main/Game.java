@@ -11,6 +11,8 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
+import com.pj.streetfighter.client.input.Keyboard;
+import com.pj.streetfighter.client.input.Mouse;
 
 public class Game extends Canvas implements Runnable 
 {
@@ -22,8 +24,11 @@ public class Game extends Canvas implements Runnable
 	
 	private JFrame frame;
 	private Thread thread;
+	private Mouse mouse;
+	private Keyboard keyboard;
+	
 	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
-	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB); // change to ARGB for opacity
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
 	// maybe should be replaced with game state logic later
@@ -32,6 +37,8 @@ public class Game extends Canvas implements Runnable
 	public Game()
 	{
 		thread = new Thread(this, "game");
+		mouse = new Mouse();
+		keyboard = new Keyboard();
 		
 		// JFrame initialization
 		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
@@ -44,8 +51,6 @@ public class Game extends Canvas implements Runnable
 		frame.add(this);
 		frame.pack();
 		frame.setVisible(true);
-		
-		// TODO: have peter try this code and see if the frame fills his screen
 	}
 	
 	public synchronized void start()
@@ -72,6 +77,7 @@ public class Game extends Canvas implements Runnable
 	@Override
 	public void run()
 	{		
+		// need to cap at 60 FPS
 		while (running)
 		{
 			// temporary function to prove that we can draw to screen, its looking good
