@@ -31,11 +31,17 @@ public class Bitmap
 	// need a method for drawing a sprite at a given x, y location
 	public void drawSprite(Sprite sprite, int x, int y)
 	{
-		drawSpriteWithOverlay(sprite, x, y, 0xFFFFFFFF);
+		drawSpriteWithOverlay(sprite, x, y, 0x00000000);
 	}
 	
 	public void drawSpriteWithOverlay(Sprite sprite, int x, int y, int overlay)
 	{
-		
+		for(int yy = y; yy < y + sprite.getSIZE(); yy++)
+		{
+			for(int xx = x; xx < x + sprite.getSIZE(); xx++)
+			{
+				pixels[xx + yy * width] = sprite.pixels[(xx - x) + (yy - y) * sprite.getSIZE()] | overlay;
+			}
+		}
 	}
 }

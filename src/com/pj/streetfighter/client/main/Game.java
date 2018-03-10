@@ -11,6 +11,8 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
+//import com.pj.streetfighter.client.graphics.Sprite;
+//import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.input.Keyboard;
 import com.pj.streetfighter.client.input.Mouse;
 
@@ -26,10 +28,14 @@ public class Game extends Canvas implements Runnable
 	private Thread thread;
 	private Mouse mouse;
 	private Keyboard keyboard;
+	//public SpriteSheet testSheet = new SpriteSheet("/character_sprites/sheetex.png", 32);
+	//private Sprite testSprite = new Sprite(32, 0, 0, testSheet);
 	
 	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+	
+	int counter = 0;
 	
 	// maybe should be replaced with game state logic later
 	private boolean running;
@@ -93,6 +99,7 @@ public class Game extends Canvas implements Runnable
 			// updates capped at 60 times per second
 			while (delta >= 1)
 			{
+				counter++;
 				// do update() for given game state
 				delta--;
 				updates++;
@@ -125,6 +132,8 @@ public class Game extends Canvas implements Runnable
 		}
 		
 		bitmap.render();
+		//bitmap.drawSprite(testSprite, 30 + counter, 30);
+		
 		
 		for (int i = 0; i < pixels.length; i++)
 		{

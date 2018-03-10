@@ -4,7 +4,7 @@ public class Sprite {
 
 	private final int SIZE;
 	private int x, y;
-	private int[] pixels;
+	public int[] pixels;
 	private SpriteSheet sheet;
 	
 	public Sprite(int size, int x, int y, SpriteSheet sheet)
@@ -12,6 +12,7 @@ public class Sprite {
 		SIZE = size;
 		this.x = x * SIZE;
 		this.y = y * SIZE;
+		pixels = new int[SIZE * SIZE];
 		this.sheet = sheet;
 		load();
 	}
@@ -26,5 +27,24 @@ public class Sprite {
 			}
 		}
 	}
-	
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getSIZE() {
+		return SIZE;
+	}
 }
