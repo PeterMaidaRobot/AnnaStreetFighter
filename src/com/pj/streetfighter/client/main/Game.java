@@ -77,31 +77,50 @@ public class Game extends Canvas implements Runnable
 	@Override
 	public void run()
 	{		
+		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
+		final double ns = 1000000000.0 / 60.0;
+		double delta = 0;
 		int frames = 0;
+		int updates = 0;
+		
 		while (running)
 		{
-			// temporary function to prove that we can draw to screen, its looking good
+			long currTime = System.nanoTime();
+			delta += (currTime - lastTime) / ns;
+			lastTime = currTime;
+			
+			// updates capped at 60 times per second
+			while (delta >= 1)
+			{
+				// do update() for given game state
+				delta--;
+				updates++;
+			}
+			
+			// render whenever possible
 			render();
 			frames++;
 
-			// need to cap at 60 FPS?
+			// update ups and fps every second
 			if (System.currentTimeMillis() - timer > 1000)
 			{
 				timer += 1000;
-				 // TODO haha do we want to print the pitiful fps?
-				frame.setTitle("Anna's Street Fighter" + "  |  " + frames + " fps");
+				frame.setTitle("Anna's Street Fighter" + "  |  " + updates + " ups, "+ frames + " fps");
+				updates = 0;
 				frames = 0;
+				
 			}
 		}
+		this.stop();
 	}
 	
 	private void render()
 	{
-		BufferStrategy bs = getBufferStrategy();
+		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null)
 		{
-			createBufferStrategy(3);
+			this.createBufferStrategy(3);
 			return;
 		}
 		
