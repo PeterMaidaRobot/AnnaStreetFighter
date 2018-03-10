@@ -1,12 +1,30 @@
 package com.pj.streetfighter.client.main;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+
+import javax.swing.JFrame;
+
+import com.pj.streetfighter.client.graphics.Bitmap;
 
 public class Game extends Canvas implements Runnable 
 {
 	private static final long serialVersionUID = 8728927276642518060L;
 
+	private final int SCALE = 2;
+	private final int WIDTH = 1280 / SCALE;
+	private final int HEIGHT = 800 / SCALE;
+	
+	private JFrame frame;
 	private Thread thread;
+	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
+	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
 	// maybe should be replaced with game state logic later
 	private boolean running;
@@ -14,6 +32,20 @@ public class Game extends Canvas implements Runnable
 	public Game()
 	{
 		thread = new Thread(this, "game");
+		
+		// JFrame initialization
+		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
+		this.setSize(size);
+		frame = new JFrame("Anna's Street Fighter");
+		frame.setMinimumSize(size);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.add(this);
+		frame.pack();
+		frame.setVisible(true);
+		
+		// TODO: have peter try this code and see if the frame fills his screen
 	}
 	
 	public synchronized void start()
@@ -39,11 +71,37 @@ public class Game extends Canvas implements Runnable
 	
 	@Override
 	public void run()
-	{
+	{		
 		while (running)
 		{
-			
+			// temporary function to prove that we can draw to screen, its looking good
+			render();
 		}
+	}
+	
+	private void render()
+	{
+		BufferStrategy bs = getBufferStrategy();
+		if (bs == null)
+		{
+			createBufferStrategy(3);
+			return;
+		}
+		
+		bitmap.render();
+		
+		for (int i = 0; i < pixels.length; i++)
+		{
+			pixels[i] = bitmap.pixels[i];
+		}
+		
+		Graphics g = bs.getDrawGraphics();
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
+		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+		
+		g.dispose();
+		bs.show();
 	}
 	
 	public static void main (String args[])
