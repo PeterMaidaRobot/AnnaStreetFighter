@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable
 	private Keyboard keyboard;
 	
 	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
-	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB); // change to ARGB for opacity
+	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
 	// maybe should be replaced with game state logic later
@@ -134,6 +134,8 @@ public class Game extends Canvas implements Runnable
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
+		g.setColor(Color.GREEN);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 		
 		g.dispose();
