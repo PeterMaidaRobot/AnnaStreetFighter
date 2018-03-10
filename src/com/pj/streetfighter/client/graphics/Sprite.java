@@ -1,38 +1,30 @@
 package com.pj.streetfighter.client.graphics;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
-
 public class Sprite {
 
-		private int x;
-		private int y;
-		private int width;
-		private int height;
-		private Image image;
-		
-		public Sprite(String path, int x, int y)
+	private final int SIZE;
+	private int x, y;
+	private int[] pixels;
+	private SpriteSheet sheet;
+	
+	public Sprite(int size, int x, int y, SpriteSheet sheet)
+	{
+		SIZE = size;
+		this.x = x * SIZE;
+		this.y = y * SIZE;
+		this.sheet = sheet;
+		load();
+	}
+	
+	private void load()
+	{
+		for (int y = 0; y < SIZE; y++)
 		{
-			this.x = x;
-			this.y = y;
-			ImageIcon ii = new ImageIcon(path);
-			this.image = ii.getImage();
-			this.width = this.image.getWidth(null);
-			this.height = this.image.getHeight(null);
+			for (int x = 0; x < SIZE; x++)
+			{
+				pixels[x + y * SIZE] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.SIZE];
+			}
 		}
-		
-		public int getX()
-		{
-			return x;
-		}
-		
-		public int getY()
-		{
-			return y;
-		}
-		
-		public Image getImage()
-		{
-			return image;
-		}
+	}
+	
 }
