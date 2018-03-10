@@ -130,7 +130,7 @@ public class Game extends Canvas implements Runnable
 		{
 			pixels[i] = bitmap.pixels[i];
 		}
-		
+
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);

@@ -1,5 +1,7 @@
 package com.pj.streetfighter.client.graphics;
 
+import java.awt.Graphics;
+import java.awt.image.ImageObserver;
 import java.util.Random;
 
 public class Bitmap
@@ -26,6 +28,10 @@ public class Bitmap
 				pixels[x + y * width] = rand.nextInt() | 0xFF000000;
 			}
 		}
+		
+		//requires a Graphics g as the render() parameter to function
+		//Sprite test = new Sprite("D-Term.png", 100, 100);
+		//g.drawImage(test.getImage(), test.getX(), test.getY(), null); //have to return the g object before displayed or pass reference?
 	}
 	
 	// need a method for drawing a sprite at a given x, y location
