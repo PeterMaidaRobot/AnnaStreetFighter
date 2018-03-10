@@ -77,11 +77,22 @@ public class Game extends Canvas implements Runnable
 	@Override
 	public void run()
 	{		
-		// need to cap at 60 FPS
+		long timer = System.currentTimeMillis();
+		int frames = 0;
 		while (running)
 		{
 			// temporary function to prove that we can draw to screen, its looking good
 			render();
+			frames++;
+
+			// need to cap at 60 FPS?
+			if (System.currentTimeMillis() - timer > 1000)
+			{
+				timer += 1000;
+				 // TODO haha do we want to print the pitiful fps?
+				frame.setTitle("Anna's Street Fighter" + "  |  " + frames + " fps");
+				frames = 0;
+			}
 		}
 	}
 	
