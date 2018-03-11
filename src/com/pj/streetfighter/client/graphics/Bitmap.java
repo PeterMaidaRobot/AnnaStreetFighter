@@ -40,6 +40,10 @@ public class Bitmap
 		{
 			for(int xx = x; xx < x + sprite.getSIZE(); xx++)
 			{
+				if (yy < 0 || yy > height || xx < 0 || xx > width)
+				{
+					continue;
+				}
 				pixels[xx + yy * width] = sprite.pixels[(xx - x) + (yy - y) * sprite.getSIZE()] | overlay;
 			}
 		}
