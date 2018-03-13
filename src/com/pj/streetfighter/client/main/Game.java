@@ -28,14 +28,13 @@ public class Game extends Canvas implements Runnable
 	private Thread thread;
 	private Mouse mouse;
 	private Keyboard keyboard;
+	private GameStateManager manager;
 	public SpriteSheet testSheet = new SpriteSheet("/character_sprites/sheetex.png", 32);
 	private Sprite testSprite = new Sprite(32, 0, 0, testSheet);
 	
 	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-	
-	int counter = 0;
 	
 	// maybe should be replaced with game state logic later
 	private boolean running;
@@ -45,6 +44,7 @@ public class Game extends Canvas implements Runnable
 		thread = new Thread(this, "game");
 		mouse = new Mouse();
 		keyboard = new Keyboard();
+		manager = new GameStateManager();
 		
 		// JFrame initialization
 		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
@@ -99,10 +99,10 @@ public class Game extends Canvas implements Runnable
 			// updates capped at 60 times per second
 			while (delta >= 1)
 			{
-				counter++;
 				// do update() for given game state
 				delta--;
 				updates++;
+				manager.update(this);
 			}
 			
 			// render whenever possible
@@ -131,9 +131,7 @@ public class Game extends Canvas implements Runnable
 			return;
 		}
 		
-		bitmap.render();
-		bitmap.drawSprite(testSprite, 30 + counter, 30);
-		
+		manager.render(bitmap);
 		
 		for (int i = 0; i < pixels.length; i++)
 		{

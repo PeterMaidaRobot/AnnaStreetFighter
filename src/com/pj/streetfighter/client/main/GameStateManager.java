@@ -3,9 +3,10 @@ package com.pj.streetfighter.client.main;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import com.pj.streetfighter.client.graphics.Bitmap;
+
 public class GameStateManager
 {
-
 	Deque<GameState> stack;
 	
 	public GameStateManager()
@@ -32,5 +33,11 @@ public class GameStateManager
 	{
 		if(!stack.isEmpty())
 			stack.peek().update(game);
+	}
+
+	public void render(Bitmap bitmap) {
+		if(!stack.isEmpty())
+			stack.peek().render(bitmap);
+		
 	}
 }
