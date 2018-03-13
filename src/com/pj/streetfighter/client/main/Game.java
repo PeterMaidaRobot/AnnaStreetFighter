@@ -27,9 +27,10 @@ public class Game extends Canvas implements Runnable
 	
 	private JFrame frame;
 	private Thread thread;
-	private Mouse mouse;
-	private Keyboard keyboard;
 	private GameStateManager manager;
+	
+	public Mouse mouse;
+	public Keyboard keyboard;
 	//public SpriteSheet testSheet = new SpriteSheet("/character_sprites/sheetex.png", 32);
 	//private Sprite testSprite = new Sprite(32, 0, 0, testSheet);
 	
