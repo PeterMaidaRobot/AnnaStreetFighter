@@ -36,15 +36,15 @@ public class Bitmap
 	
 	public void drawSpriteWithOverlay(Sprite sprite, int x, int y, int overlay)
 	{
-		for(int yy = y; yy < y + sprite.getSIZE(); yy++)
+		for(int yy = y; yy < y + sprite.getYSIZE(); yy++)
 		{
-			for(int xx = x; xx < x + sprite.getSIZE(); xx++)
+			for(int xx = x; xx < x + sprite.getXSIZE(); xx++)
 			{
 				if (yy < 0 || yy > height || xx < 0 || xx > width)
 				{
 					continue;
 				}
-				pixels[xx + yy * width] = sprite.pixels[(xx - x) + (yy - y) * sprite.getSIZE()] | overlay;
+				pixels[xx + yy * width] = sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] | overlay;
 			}
 		}
 	}
