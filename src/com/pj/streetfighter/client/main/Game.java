@@ -103,13 +103,11 @@ public class Game extends Canvas implements Runnable
 				// do update() for given game state
 				delta--;
 				updates++;
-				
-				render();
-				frames++;
 			}
 			
 			// render whenever possible
-			
+			render();
+			frames++;
 
 			// update ups and fps every second
 			if (System.currentTimeMillis() - timer > 1000)
