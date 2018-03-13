@@ -11,10 +11,11 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
-import com.pj.streetfighter.client.graphics.Sprite;
-import com.pj.streetfighter.client.graphics.SpriteSheet;
+//import com.pj.streetfighter.client.graphics.Sprite;
+//import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.input.Keyboard;
 import com.pj.streetfighter.client.input.Mouse;
+import com.pj.streetfighter.client.state.Menu;
 
 public class Game extends Canvas implements Runnable 
 {
@@ -29,8 +30,8 @@ public class Game extends Canvas implements Runnable
 	private Mouse mouse;
 	private Keyboard keyboard;
 	private GameStateManager manager;
-	public SpriteSheet testSheet = new SpriteSheet("/character_sprites/sheetex.png", 32);
-	private Sprite testSprite = new Sprite(32, 0, 0, testSheet);
+	//public SpriteSheet testSheet = new SpriteSheet("/character_sprites/sheetex.png", 32);
+	//private Sprite testSprite = new Sprite(32, 0, 0, testSheet);
 	
 	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -45,6 +46,7 @@ public class Game extends Canvas implements Runnable
 		mouse = new Mouse();
 		keyboard = new Keyboard();
 		manager = new GameStateManager();
+		manager.push(new Menu());
 		
 		// JFrame initialization
 		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
@@ -141,8 +143,6 @@ public class Game extends Canvas implements Runnable
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
-		g.setColor(Color.GREEN);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 		
 		g.dispose();

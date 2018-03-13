@@ -9,13 +9,7 @@ public class Sprite {
 	
 	public Sprite(int size, int x, int y, SpriteSheet sheet)
 	{
-		this.X_SIZE = size;
-		this.Y_SIZE = size;
-		this.x = x * X_SIZE;
-		this.y = y * Y_SIZE;
-		this.pixels = new int[X_SIZE * Y_SIZE];
-		this.sheet = sheet;
-		load();
+		this(size, size, x, y, sheet);
 	}
 	
 	public Sprite(int xSize, int ySize, int x, int y, SpriteSheet sheet)
