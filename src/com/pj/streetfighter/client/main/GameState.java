@@ -5,6 +5,6 @@ public interface GameState
 	
 	public void onEnter();
 	public void onExit();
-	public void update();
+	public void update(Game game);
 	
 }

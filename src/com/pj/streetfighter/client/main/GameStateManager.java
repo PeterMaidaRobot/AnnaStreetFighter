@@ -28,9 +28,9 @@ public class GameStateManager
 		}
 	}
 	
-	public void update()
+	public void update(Game game)
 	{
 		if(!stack.isEmpty())
-			stack.peek().update();
+			stack.peek().update(game);
 	}
 }
