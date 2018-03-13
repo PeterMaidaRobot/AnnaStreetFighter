@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
+import com.pj.streetfighter.client.state.GameState;
 
 public class GameStateManager
 {

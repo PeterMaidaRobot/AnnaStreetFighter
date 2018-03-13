@@ -1,6 +1,7 @@
-package com.pj.streetfighter.client.main;
+package com.pj.streetfighter.client.state;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
+import com.pj.streetfighter.client.main.Game;
 
 public interface GameState
 {
