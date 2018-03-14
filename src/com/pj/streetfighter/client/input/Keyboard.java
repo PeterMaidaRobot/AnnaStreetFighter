@@ -7,11 +7,31 @@ public class Keyboard implements KeyListener
 {
 
 	private boolean[] keys = new boolean[120];
-	public boolean up, down, left, right, z, x, c;
+	private final int jumpMap, crouchMap, leftMap, rightMap, blockMap, punchMap, kickMap;
+	public boolean jump, crouch, left, right, block, punch, kick;
 	
 	public Keyboard()
 	{
-		
+		// sets to the default key bindings
+		jumpMap = KeyEvent.VK_UP;
+		crouchMap = KeyEvent.VK_DOWN;
+		leftMap = KeyEvent.VK_LEFT;
+		rightMap = KeyEvent.VK_RIGHT;
+		blockMap = KeyEvent.VK_Z;
+		punchMap = KeyEvent.VK_X;
+		kickMap = KeyEvent.VK_C;
+	}
+	
+	public Keyboard(int upMap, int downMap, int leftMap, int rightMap, int zMap, int xMap, int cMap)
+	{
+		// sets to custom key bindings
+		this.jumpMap = upMap;
+		this.crouchMap = downMap;
+		this.leftMap = leftMap;
+		this.rightMap = rightMap;
+		this.blockMap = zMap;
+		this.punchMap = xMap;
+		this.kickMap = cMap;
 	}
 	
 	@Override
@@ -34,13 +54,13 @@ public class Keyboard implements KeyListener
 	
 	public void update()
 	{
-		up = keys[KeyEvent.VK_UP];
-		down = keys[KeyEvent.VK_DOWN];
-		left = keys[KeyEvent.VK_LEFT];
-		right = keys[KeyEvent.VK_RIGHT];
-		z = keys[KeyEvent.VK_Z];
-		x = keys[KeyEvent.VK_X];
-		c = keys[KeyEvent.VK_C];
+		jump = keys[jumpMap];
+		crouch = keys[crouchMap];
+		left = keys[leftMap];
+		right = keys[rightMap];
+		block = keys[blockMap];
+		punch = keys[punchMap];
+		kick = keys[kickMap];
 	}
 
 }
