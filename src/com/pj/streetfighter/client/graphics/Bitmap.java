@@ -17,6 +17,16 @@ public class Bitmap
 		pixels = new int[this.width * this.height];
 	}
 	
+	public int getWidth()
+	{
+		return width;
+	}
+	
+	public int getHeight()
+	{
+		return height;
+	}
+	
 	public void render()
 	{
 		for (int y = 0; y < height; y++)
@@ -41,6 +51,10 @@ public class Bitmap
 			for(int xx = x; xx < x + sprite.getXSIZE(); xx++)
 			{
 				if (yy < 0 || yy > height || xx < 0 || xx > width)
+				{
+					continue;
+				}
+				if (sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] == 0xFFFF00FF)
 				{
 					continue;
 				}

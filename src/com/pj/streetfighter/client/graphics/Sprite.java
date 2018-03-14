@@ -16,8 +16,8 @@ public class Sprite {
 	{
 		this.X_SIZE = xSize;
 		this.Y_SIZE = ySize;
-		this.x = x * X_SIZE;
-		this.y = y * Y_SIZE;
+		this.x = x;
+		this.y = y;
 		this.pixels = new int[X_SIZE * Y_SIZE];
 		this.sheet = sheet;
 		load();
