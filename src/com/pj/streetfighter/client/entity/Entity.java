@@ -1,29 +1,36 @@
 package com.pj.streetfighter.client.entity;
 
+import com.pj.streetfighter.client.graphics.Sprite;
+
 public abstract class Entity
 {
-	int x, y;
-	
-	public Entity(int x, int y)
-	{
-		this.x = x;
-		this.y = y;
-	}
+	private int xPos, yPos;
 
 	public int getX() {
-		return x;
+		return xPos;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setX(int xPos) {
+		this.xPos = xPos;
 	}
 
 	public int getY() {
-		return y;
+		return yPos;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void setY(int yPos) {
+		this.yPos = yPos;
+	}
+	
+	public void move(int xOffs, int yOffs)
+	{
+		setX(this.getX() + xOffs);
+		setY(this.getY() + yOffs);
+	}
+	
+	public Sprite getSprite()
+	{
+		return null;
 	}
 	
 }
