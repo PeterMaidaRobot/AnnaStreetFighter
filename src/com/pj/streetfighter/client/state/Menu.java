@@ -9,15 +9,12 @@ public class Menu implements GameState
 {
 	SpriteSheet menuSheet;
 	Sprite menuBackground;
-	int counter;
 	
 	@Override
 	public void onEnter()
 	{
 		menuSheet = new SpriteSheet("/character_sprites/menusheet.png", 640);
 		menuBackground = new Sprite(640, 378, 0, 0, menuSheet);
-		counter = 0;
-		System.out.println();
 	}
 
 	@Override
