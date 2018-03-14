@@ -35,12 +35,6 @@ public class Keyboard implements KeyListener
 	}
 	
 	@Override
-	public void keyTyped(KeyEvent e)
-	{
-		
-	}
-
-	@Override
 	public void keyPressed(KeyEvent e)
 	{
 		keys[e.getKeyCode()] = true;
@@ -62,5 +56,9 @@ public class Keyboard implements KeyListener
 		punch = keys[punchMap];
 		kick = keys[kickMap];
 	}
-
+	
+	
+	
+	@Override
+	public void keyTyped(KeyEvent e){}
 }
