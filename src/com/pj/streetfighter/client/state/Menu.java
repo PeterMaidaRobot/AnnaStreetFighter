@@ -7,24 +7,29 @@ import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.main.Game;
 
-public class Menu implements GameState
+public class Menu extends GameState
 {
 	SpriteSheet menuSheet;
 	Sprite menuBackground;
 	UIElement connectButton;
 	
-	@Override
-	public void onEnter()
+	public Menu(int width, int height)
 	{
+		super(width, height);
 		menuSheet = new SpriteSheet("/character_sprites/menusheet.png", 640);
 		menuBackground = new Sprite(640, 378, 0, 0, menuSheet);
 		connectButton = new UIElement(new Sprite(64, 16, 0, 378, menuSheet), 0, 0, 64, 16);
+	}
+	
+	@Override
+	public void onEnter()
+	{
+		
 	}
 
 	@Override
 	public void onExit()
 	{
-		// TODO Auto-generated method stub
 		
 	}
 

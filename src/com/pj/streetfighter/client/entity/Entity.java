@@ -2,7 +2,6 @@ package com.pj.streetfighter.client.entity;
 
 public abstract class Entity
 {
-
 	int x, y;
 	
 	public Entity(int x, int y)

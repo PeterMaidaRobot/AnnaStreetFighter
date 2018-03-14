@@ -7,10 +7,11 @@ public class UIElement
 	private Sprite sprite;
 	private BoundingBox box;
 	
-	public UIElement(Sprite sprite, int x1, int y1, int x2, int y2)
+	public UIElement(Sprite sprite, int bx1, int by1, int bx2, int by2)
 	{
+		//super(x, y);
 		this.sprite = sprite;
-		this.box = new BoundingBox(x1, y1, x2, y2);
+		this.box = new BoundingBox(bx1, by1, bx2, by2);
 	}
 
 	public boolean containsCursor(int x, int y)

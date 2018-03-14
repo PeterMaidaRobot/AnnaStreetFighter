@@ -3,7 +3,12 @@ package com.pj.streetfighter.client.state;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.main.Game;
 
-public class Selection implements GameState{
+public class Selection extends GameState{
+
+	public Selection(int width, int height)
+	{
+		super(width, height);
+	}
 
 	@Override
 	public void onEnter() {

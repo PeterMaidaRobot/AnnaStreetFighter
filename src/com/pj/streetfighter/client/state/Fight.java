@@ -3,7 +3,12 @@ package com.pj.streetfighter.client.state;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.main.Game;
 
-public class Fight implements GameState{
+public class Fight extends GameState{
+
+	public Fight(int width, int height)
+	{
+		super(width, height);
+	}
 
 	@Override
 	public void onEnter() {

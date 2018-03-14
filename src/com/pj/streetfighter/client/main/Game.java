@@ -4,7 +4,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -12,8 +11,6 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
-//import com.pj.streetfighter.client.graphics.Sprite;
-//import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.input.Keyboard;
 import com.pj.streetfighter.client.input.Mouse;
 import com.pj.streetfighter.client.state.Menu;
@@ -23,8 +20,8 @@ public class Game extends Canvas implements Runnable
 	private static final long serialVersionUID = 8728927276642518060L;
 
 	private final int SCALE = 2;
-	private final int WIDTH = 1280 / SCALE;
-	private final int HEIGHT = 756 / SCALE;
+	public final int WIDTH = 1280 / SCALE;
+	public final int HEIGHT = 756 / SCALE;
 	
 	private JFrame frame;
 	private Thread thread;
@@ -32,8 +29,6 @@ public class Game extends Canvas implements Runnable
 	
 	public Mouse mouse;
 	public Keyboard keyboard;
-	//public SpriteSheet testSheet = new SpriteSheet("/character_sprites/sheetex.png", 32);
-	//private Sprite testSprite = new Sprite(32, 0, 0, testSheet);
 	
 	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -48,7 +43,7 @@ public class Game extends Canvas implements Runnable
 		mouse = new Mouse();
 		keyboard = new Keyboard();
 		manager = new GameStateManager();
-		manager.push(new Menu());
+		manager.push(new Menu(WIDTH, HEIGHT));
 		
 		addKeyListener(keyboard);
 		addMouseListener(mouse);
