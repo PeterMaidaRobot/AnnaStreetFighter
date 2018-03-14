@@ -22,16 +22,16 @@ public class Keyboard implements KeyListener
 		kickMap = KeyEvent.VK_C;
 	}
 	
-	public Keyboard(int upMap, int downMap, int leftMap, int rightMap, int zMap, int xMap, int cMap)
+	public Keyboard(int upMap, int downMap, int leftMap, int rightMap, int blockMap, int punchMap, int kickMap)
 	{
 		// sets to custom key bindings
 		this.jumpMap = upMap;
 		this.crouchMap = downMap;
 		this.leftMap = leftMap;
 		this.rightMap = rightMap;
-		this.blockMap = zMap;
-		this.punchMap = xMap;
-		this.kickMap = cMap;
+		this.blockMap = blockMap;
+		this.punchMap = punchMap;
+		this.kickMap = kickMap;
 	}
 	
 	@Override
