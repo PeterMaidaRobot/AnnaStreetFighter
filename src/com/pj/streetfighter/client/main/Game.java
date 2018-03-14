@@ -49,6 +49,10 @@ public class Game extends Canvas implements Runnable
 		manager = new GameStateManager();
 		manager.push(new Menu());
 		
+
+		addMouseListener(mouse);
+		addMouseMotionListener(mouse);
+		
 		// JFrame initialization
 		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
 		this.setSize(size);
@@ -145,6 +149,7 @@ public class Game extends Canvas implements Runnable
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+		g.fillRect(mouse.getX(), mouse.getY(), 100, 100);
 		
 		g.dispose();
 		bs.show();

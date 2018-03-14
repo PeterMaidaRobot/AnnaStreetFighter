@@ -31,6 +31,7 @@ public class Menu implements GameState
 	public void update(Game game)
 	{
 		counter++;
+		//System.out.println(game.mouse.getX() + ", " + game.mouse.getY());
 		if (game.mouse.isPressed())
 		{
 			System.out.println(game.mouse.getX() + ", " + game.mouse.getY());
