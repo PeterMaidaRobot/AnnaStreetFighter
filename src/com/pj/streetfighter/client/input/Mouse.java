@@ -9,7 +9,8 @@ public class Mouse implements MouseListener, MouseMotionListener
 	private int x, y;
 	private boolean pressed;
 	
-	public Mouse() {
+	public Mouse()
+	{
 		x = 0;
 		y = 0;
 		pressed = false;

@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable
 		manager = new GameStateManager();
 		manager.push(new Menu());
 		
-
+		addKeyListener(keyboard);
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
 		
@@ -107,9 +107,10 @@ public class Game extends Canvas implements Runnable
 			while (delta >= 1)
 			{
 				// do update() for given game state
-				delta--;
-				updates++;
+				keyboard.update();
 				manager.update(this);
+				updates++;
+				delta--;
 			}
 			
 			// render whenever possible
@@ -149,7 +150,6 @@ public class Game extends Canvas implements Runnable
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
 		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
-		g.fillRect(mouse.getX(), mouse.getY(), 100, 100);
 		
 		g.dispose();
 		bs.show();
