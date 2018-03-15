@@ -24,7 +24,7 @@ public class UIButton extends Entity implements Clickable
 		isSelected = false;
 		for (int i = 0; i < boxes.size(); i++)
 		{
-			if (boxes.get(i).contains(mouseX, mouseY))
+			if (boxes.get(i).contains(mouseX/2 - getX(), mouseY/2 - getY()))
 			{
 				isSelected = true;
 			}
