@@ -25,8 +25,10 @@ public class Menu extends GameState
 		Sprite connectUnselected = new Sprite(64, 16, 0, 378, menuSheet);
 		Sprite connectSelected = new Sprite(64, 16, 64, 378, menuSheet);
 		List<BoundingBox> connectBoxes = new ArrayList<BoundingBox>();
-		connectBoxes.add(new BoundingBox(1, 0, , y2));
-		connect = new UIButton(width/2, height/2, connectUnselected, connectSelected, null);
+		connectBoxes.add(new BoundingBox(1, 0, 56, 4));
+		connectBoxes.add(new BoundingBox(3, 4, 60, 10));
+		connectBoxes.add(new BoundingBox(6, 11, 62, 15));
+		connect = new UIButton(width/2, height/2, connectUnselected, connectSelected, connectBoxes);
 	}
 	
 	@Override
