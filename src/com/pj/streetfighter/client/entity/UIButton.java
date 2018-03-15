@@ -6,7 +6,8 @@ import com.pj.streetfighter.client.graphics.Sprite;
 
 public class UIButton extends Entity implements Clickable
 {
-	private boolean isSelected;
+	private boolean isSelected, selectBounce = true;
+	public int yOffs = 0;
 	private Sprite unselected, selected;
 	private List<BoundingBox> boxes;
 	
@@ -28,6 +29,27 @@ public class UIButton extends Entity implements Clickable
 			{
 				isSelected = true;
 			}
+		}
+		
+		if (isSelected)
+		{
+			if (selectBounce)
+			{
+				if(yOffs <= 5)
+					yOffs++;
+				else
+					selectBounce = false;
+			}
+			else
+			{
+				if(yOffs > 0)
+					yOffs--;
+				else
+					selectBounce = true;
+			}
+			
+		} else {
+			yOffs = 0;
 		}
 	}
 	

@@ -54,7 +54,7 @@ public class Menu extends GameState
 	public void render(Bitmap map)
 	{
 		map.drawSprite(menuBackground, 0, 0);
-		map.drawSprite(connect.getSprite(), connect.getX(), connect.getY());
+		map.drawSprite(connect.getSprite(), connect.getX(), connect.getY() + connect.yOffs);
 	}
 
 		
