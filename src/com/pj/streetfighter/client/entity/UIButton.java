@@ -7,7 +7,8 @@ import com.pj.streetfighter.client.graphics.Sprite;
 public class UIButton extends Entity implements Clickable
 {
 	private boolean isSelected, selectBounce = true;
-	public int yOffs = 0;
+	public short yOffs = 0;
+	private Oscillator yOsc = new Oscillator((short) 0, (short) 5, (float) 0.23);
 	private Sprite unselected, selected;
 	private List<BoundingBox> boxes;
 	
@@ -35,24 +36,12 @@ public class UIButton extends Entity implements Clickable
 		// updates the offset of the bouncing button
 		if (isSelected)
 		{
-			if (selectBounce)
-			{
-				if(yOffs <= 5)
-					yOffs++;
-				else
-					selectBounce = false;
-			}
-			else
-			{
-				if(yOffs > 0)
-					yOffs--;
-				else
-					selectBounce = true;
-			}
+			yOffs = yOsc.getNum();
 		}
 		else
 		{
 			yOffs = 0;
+			yOsc.reset();
 		}
 	}
 	

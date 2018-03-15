@@ -30,7 +30,7 @@ public class Menu extends GameState
 		connectBoxes.add(new BoundingBox(1, 0, 56, 4));
 		connectBoxes.add(new BoundingBox(3, 4, 60, 10));
 		connectBoxes.add(new BoundingBox(6, 11, 62, 15));
-		connect = new UIButton(width/2, height/2, connectUnselected, connectSelected, connectBoxes);
+		connect = new UIButton(width/2, 3*(height/4), connectUnselected, connectSelected, connectBoxes);
 	}
 	
 	@Override
