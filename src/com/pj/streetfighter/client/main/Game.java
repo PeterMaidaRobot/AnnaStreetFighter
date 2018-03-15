@@ -62,6 +62,11 @@ public class Game extends Canvas implements Runnable
 		frame.setVisible(true);
 	}
 	
+	public void setRunning(boolean isRunning)
+	{
+		running = isRunning;
+	}
+	
 	public synchronized void start()
 	{
 		/* any code that needs to be executed before game runs */
@@ -104,7 +109,7 @@ public class Game extends Canvas implements Runnable
 			{
 				// do update() for given game state
 				keyboard.update();
-				manager.update(mouse, keyboard);
+				manager.update(this);
 				updates++;
 				delta--;
 			}

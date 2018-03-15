@@ -1,8 +1,7 @@
 package com.pj.streetfighter.client.state;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
-import com.pj.streetfighter.client.input.Keyboard;
-import com.pj.streetfighter.client.input.Mouse;
+import com.pj.streetfighter.client.main.Game;
 
 public class Fight extends GameState{
 
@@ -24,7 +23,7 @@ public class Fight extends GameState{
 	}
 
 	@Override
-	public void update(Mouse mouse, Keyboard keyboard) {
+	public void update(Game game) {
 		// TODO Auto-generated method stub
 		
 	}

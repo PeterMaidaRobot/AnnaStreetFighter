@@ -10,6 +10,7 @@ import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.input.Keyboard;
 import com.pj.streetfighter.client.input.Mouse;
+import com.pj.streetfighter.client.main.Game;
 
 public class Menu extends GameState
 {
@@ -46,13 +47,13 @@ public class Menu extends GameState
 	}
 
 	@Override
-	public void update(Mouse mouse, Keyboard keyboard)
+	public void update(Game game)
 	{
 		// need to call this code block for every Clickable UI element
-		connect.update(mouse.getX(), mouse.getY());	
-		if (connect.isPressed() && mouse.isPressed())
+		connect.update(game.mouse.getX(), game.mouse.getY());	
+		if (connect.isPressed() && game.mouse.isPressed())
 		{
-			// TODO luv me
+			game.setRunning(false);
 		}
 	}
 

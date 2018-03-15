@@ -4,8 +4,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
-import com.pj.streetfighter.client.input.Keyboard;
-import com.pj.streetfighter.client.input.Mouse;
 import com.pj.streetfighter.client.state.GameState;
 
 public class GameStateManager
@@ -32,10 +30,10 @@ public class GameStateManager
 		}
 	}
 	
-	public void update(Mouse mouse, Keyboard keyboard)
+	public void update(Game game)
 	{
 		if(!stack.isEmpty())
-			stack.peek().update(mouse, keyboard);
+			stack.peek().update(game);
 	}
 
 	public void render(Bitmap bitmap) {
