@@ -34,7 +34,7 @@ public class Game extends Canvas implements Runnable
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
-	// maybe should be replaced with game state logic later
+	// TODO maybe should be replaced with game state logic later
 	private boolean running;
 	
 	public Game()
@@ -85,7 +85,7 @@ public class Game extends Canvas implements Runnable
 	
 	@Override
 	public void run()
-	{		
+	{
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 120.0;
@@ -135,8 +135,10 @@ public class Game extends Canvas implements Runnable
 			return;
 		}
 		
+		// renders sprites from current game state into bitmap
 		manager.render(bitmap);
 		
+		// get the pixels from the bitmap and store them for the game screen
 		for (int i = 0; i < pixels.length; i++)
 		{
 			pixels[i] = bitmap.pixels[i];
