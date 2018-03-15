@@ -29,6 +29,7 @@ public class Bitmap
 	
 	public void render()
 	{
+		// render every pixel with a full alpha channel
 		for (int y = 0; y < height; y++)
 		{
 			for (int x = 0; x < width; x++)
@@ -50,14 +51,17 @@ public class Bitmap
 		{
 			for(int xx = x; xx < x + sprite.getXSIZE(); xx++)
 			{
+				// do not if the sprite is off screen, don't include it
 				if (yy < 0 || yy > height || xx < 0 || xx > width)
 				{
 					continue;
 				}
+				// do not store this "transparent" pixel color in the array
 				if (sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] == 0xFFFF00FF)
 				{
 					continue;
 				}
+				
 				pixels[xx + yy * width] = sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] | overlay;
 			}
 		}

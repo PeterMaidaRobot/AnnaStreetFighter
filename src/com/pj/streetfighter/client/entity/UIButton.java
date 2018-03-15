@@ -22,6 +22,7 @@ public class UIButton extends Entity implements Clickable
 	
 	public void update(int mouseX, int mouseY)
 	{
+		// updates isSelected if the mouse is within the bound boxes
 		isSelected = false;
 		for (int i = 0; i < boxes.size(); i++)
 		{
@@ -31,6 +32,7 @@ public class UIButton extends Entity implements Clickable
 			}
 		}
 		
+		// updates the offset of the bouncing button
 		if (isSelected)
 		{
 			if (selectBounce)

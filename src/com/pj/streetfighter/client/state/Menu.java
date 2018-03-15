@@ -52,7 +52,7 @@ public class Menu extends GameState
 		connect.update(mouse.getX(), mouse.getY());	
 		if (connect.isPressed() && mouse.isPressed())
 		{
-			
+			// TODO luv me
 		}
 	}
 
