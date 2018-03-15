@@ -48,6 +48,8 @@ public class Menu extends GameState
 	public void update(Mouse mouse, Keyboard keyboard)
 	{
 		connect.update(mouse.getX(), mouse.getY());	
+		if (connect.isPressed() && mouse.isPressed())
+			connect.onPressed();
 	}
 
 	@Override
