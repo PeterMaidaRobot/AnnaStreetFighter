@@ -104,7 +104,7 @@ public class Game extends Canvas implements Runnable
 			{
 				// do update() for given game state
 				keyboard.update();
-				manager.update(this);
+				manager.update(mouse, keyboard);
 				updates++;
 				delta--;
 			}

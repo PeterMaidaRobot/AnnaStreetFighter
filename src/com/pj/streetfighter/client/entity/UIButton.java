@@ -6,6 +6,7 @@ import com.pj.streetfighter.client.graphics.Sprite;
 
 public class UIButton extends Entity implements Clickable
 {
+	private boolean isSelected;
 	private Sprite unselected, selected;
 	private List<BoundingBox> boxes;
 	
@@ -15,19 +16,25 @@ public class UIButton extends Entity implements Clickable
 		this.unselected = unselected;
 		this.selected = selected;
 		this.boxes = boxes;
+		this.isSelected = false;
 	}
 	
-	@Override
-	public boolean isPressed(int mouseX, int mouseY)
+	public void update(int mouseX, int mouseY)
 	{
+		isSelected = false;
 		for (int i = 0; i < boxes.size(); i++)
 		{
 			if (boxes.get(i).contains(mouseX, mouseY))
 			{
-				return true;
+				isSelected = true;
 			}
 		}
-		return false;
+	}
+	
+	@Override
+	public boolean isPressed()
+	{
+		return isSelected;
 	}
 	
 	@Override
@@ -39,7 +46,10 @@ public class UIButton extends Entity implements Clickable
 	@Override
 	public Sprite getSprite()
 	{
-		return unselected;
+		if (isSelected)
+			return selected;
+		else
+			return unselected;
 	}
-	
+
 }

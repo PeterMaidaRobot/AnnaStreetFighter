@@ -8,7 +8,8 @@ import com.pj.streetfighter.client.entity.UIButton;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
-import com.pj.streetfighter.client.main.Game;
+import com.pj.streetfighter.client.input.Keyboard;
+import com.pj.streetfighter.client.input.Mouse;
 
 public class Menu extends GameState
 {
@@ -44,9 +45,9 @@ public class Menu extends GameState
 	}
 
 	@Override
-	public void update(Game game)
+	public void update(Mouse mouse, Keyboard keyboard)
 	{
-		
+		connect.update(mouse.getX(), mouse.getY());	
 	}
 
 	@Override
