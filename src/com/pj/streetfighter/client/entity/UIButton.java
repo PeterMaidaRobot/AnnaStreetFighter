@@ -63,8 +63,7 @@ public class UIButton extends Entity implements Clickable
 	@Override
 	public void onPressed()
 	{
-		yOffs = 100;
-		selectBounce = false;
+		
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ public class BoundingBox {
 	
 	public boolean contains(int x, int y)
 	{
+		// check whether point passed is within bounds
 		return (x >= x1 && x <= x2 && y >= y1 && y <= y2);
 	}
 }
