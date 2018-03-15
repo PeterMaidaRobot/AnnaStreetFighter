@@ -9,8 +9,9 @@ public class UIButton extends Entity implements Clickable
 	private Sprite unselected, selected;
 	private List<BoundingBox> boxes;
 	
-	public UIButton(Sprite unselected, Sprite selected, List<BoundingBox> boxes)
+	public UIButton(int x, int y, Sprite unselected, Sprite selected, List<BoundingBox> boxes)
 	{
+		super(x - unselected.getXSIZE()/2, y - unselected.getYSIZE()/2);
 		this.unselected = unselected;
 		this.selected = selected;
 		this.boxes = boxes;
@@ -34,5 +35,11 @@ public class UIButton extends Entity implements Clickable
 	{
 		
 	}
-
+	
+	@Override
+	public Sprite getSprite()
+	{
+		return unselected;
+	}
+	
 }

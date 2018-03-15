@@ -5,6 +5,12 @@ import com.pj.streetfighter.client.graphics.Sprite;
 public abstract class Entity
 {
 	private int xPos, yPos;
+	
+	public Entity(int xPos, int yPos) 
+	{
+		this.xPos = xPos;
+		this.yPos = yPos;
+	}
 
 	public int getX() {
 		return xPos;

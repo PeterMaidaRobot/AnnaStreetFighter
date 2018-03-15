@@ -1,6 +1,10 @@
 package com.pj.streetfighter.client.state;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pj.streetfighter.client.entity.BoundingBox;
+import com.pj.streetfighter.client.entity.UIButton;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
@@ -10,14 +14,19 @@ public class Menu extends GameState
 {
 	SpriteSheet menuSheet;
 	Sprite menuBackground;
-	//UIElement connectButton;
+	UIButton connect;
 	
 	public Menu(int width, int height)
 	{
 		super(width, height);
 		menuSheet = new SpriteSheet("/character_sprites/menusheet.png", 640);
 		menuBackground = new Sprite(640, 378, 0, 0, menuSheet);
-		//connectButton = new UIElement(new Sprite(64, 16, 0, 378, menuSheet), 0, 0, 64, 16);
+		
+		Sprite connectUnselected = new Sprite(64, 16, 0, 378, menuSheet);
+		Sprite connectSelected = new Sprite(64, 16, 64, 378, menuSheet);
+		List<BoundingBox> connectBoxes = new ArrayList<BoundingBox>();
+		connectBoxes.add(new BoundingBox(1, 0, , y2));
+		connect = new UIButton(width/2, height/2, connectUnselected, connectSelected, null);
 	}
 	
 	@Override
