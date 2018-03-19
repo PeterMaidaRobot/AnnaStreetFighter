@@ -6,35 +6,43 @@ import com.pj.streetfighter.client.graphics.Sprite;
 
 public class UIButton extends Entity implements Clickable
 {
-	private boolean isSelected, selectBounce = true;
+	private boolean hovered = false, selected = false, selectBounce = true;
 	public short yOffs = 0;
 	private Oscillator yOsc = new Oscillator((short) 0, (short) 5, (float) 0.23);
-	private Sprite unselected, selected;
+	private Sprite unselectedSprite, selectedSprite;
 	private List<BoundingBox> boxes;
 	
-	public UIButton(int x, int y, Sprite unselected, Sprite selected, List<BoundingBox> boxes)
+	public UIButton(int x, int y, Sprite unselectedSprite, Sprite selectedSprite, List<BoundingBox> boxes)
 	{
-		super(x - unselected.getXSIZE()/2, y - unselected.getYSIZE()/2);
-		this.unselected = unselected;
-		this.selected = selected;
+		super(x - unselectedSprite.getXSIZE()/2, y - unselectedSprite.getYSIZE()/2);
+		this.unselectedSprite = unselectedSprite;
+		this.selectedSprite = selectedSprite;
 		this.boxes = boxes;
-		this.isSelected = false;
 	}
 	
-	public void update(int mouseX, int mouseY)
+	public void update(boolean pressed, int mouseX, int mouseY)
 	{
-		// updates isSelected if the mouse is within the bound boxes
-		isSelected = false;
+		// the button is not hovered if the mouse is not over the button
+		hovered = false;
+		
+		// if the button has been pressed outside of the button, the button is now unselected
+		if (pressed)
+			selected = false;
+		
+		// updates booleans if the mouse is within the bound boxes
 		for (int i = 0; i < boxes.size(); i++)
 		{
 			if (boxes.get(i).contains(mouseX/2 - getX(), mouseY/2 - getY()))
 			{
-				isSelected = true;
+				hovered = true;
+				// if the button has been pressed inside of the button, the button is now selected
+				if (pressed)
+					selected = true;
 			}
 		}
 		
 		// updates the offset of the bouncing button
-		if (isSelected)
+		if (hovered)
 		{
 			yOffs = yOsc.getNum();
 		}
@@ -46,9 +54,9 @@ public class UIButton extends Entity implements Clickable
 	}
 	
 	@Override
-	public boolean isPressed()
+	public boolean isHovered()
 	{
-		return isSelected;
+		return hovered;
 	}
 	
 	@Override
@@ -60,10 +68,10 @@ public class UIButton extends Entity implements Clickable
 	@Override
 	public Sprite getSprite()
 	{
-		if (isSelected)
-			return selected;
+		if (hovered || selected)
+			return selectedSprite;
 		else
-			return unselected;
+			return unselectedSprite;
 	}
 
 }

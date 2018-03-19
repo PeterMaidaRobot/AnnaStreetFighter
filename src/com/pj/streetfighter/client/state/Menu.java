@@ -8,8 +8,6 @@ import com.pj.streetfighter.client.entity.UIButton;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
-import com.pj.streetfighter.client.input.Keyboard;
-import com.pj.streetfighter.client.input.Mouse;
 import com.pj.streetfighter.client.main.Game;
 
 public class Menu extends GameState
@@ -50,9 +48,10 @@ public class Menu extends GameState
 	public void update(Game game)
 	{
 		// need to call this code block for every Clickable UI element
-		connect.update(game.mouse.getX(), game.mouse.getY());	
-		if (connect.isPressed() && game.mouse.isPressed())
+		connect.update(false, game.mouse.getX(), game.mouse.getY());	
+		if (game.mouse.isPressed())
 		{
+			connect.update(true, game.mouse.getX(), game.mouse.getY());	
 			game.connectionManager.doConnection = true;
 		}
 	}
