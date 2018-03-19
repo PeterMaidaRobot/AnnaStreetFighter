@@ -78,6 +78,7 @@ public class Menu extends GameState
 		if (quit.isSelected())
 		{
 			game.setRunning(false);
+			game.frame.dispose();
 			System.exit(0);
 		}
 	}
