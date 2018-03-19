@@ -64,7 +64,7 @@ public class Menu extends GameState
 		int mouseY = game.mouse.getY();
 		
 		// need to call this code block for every UI element
-		address.onKeyPress(game.keyboard);
+		address.update(game.keyboard);
 		connect.update(false, mouseX, mouseY);	
 		quit.update(false, mouseX, mouseY);
 		if (game.mouse.isPressed())

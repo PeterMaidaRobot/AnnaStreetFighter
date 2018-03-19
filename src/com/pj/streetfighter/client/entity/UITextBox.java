@@ -14,6 +14,7 @@ public abstract class UITextBox extends Entity
 	private String text = "";
 	private final int MAX_LENGTH;
 	private long lastTime;
+	private int lastKey;
 	
 	public UITextBox(int x, int y, Sprite unselectedSprite, Sprite selectedSprite, List<BoundingBox> boxes, int maxLength)
 	{
@@ -23,33 +24,40 @@ public abstract class UITextBox extends Entity
 		this.boxes = boxes;
 		this.MAX_LENGTH = maxLength;
 		lastTime = System.currentTimeMillis();
+		lastKey = 0;
 	}
 	
-	public void onKeyPress(Keyboard keyboard)
+	public void update(Keyboard keyboard)
 	{
-		if (selected && System.currentTimeMillis() - lastTime > 100) // TODO parallel array for full key press??? Ugly!
+		//  46 for .,48 for 0, 57 for 9, 65 for A, 90 for Z. Will print = and ;
+		for (int currKey = KeyEvent.VK_PERIOD; currKey < KeyEvent.VK_Z && currKey < keyboard.NUM_KEYS; currKey++) 
 		{
-			lastTime = System.currentTimeMillis();
-			if (keyboard.isPressed(KeyEvent.VK_DELETE) || keyboard.isPressed(KeyEvent.VK_BACK_SPACE))
+			if (keyboard.isPressed(currKey) && (currKey != lastKey || System.currentTimeMillis() - lastTime > 100))
+			{
+				lastKey = currKey;
+				lastTime = System.currentTimeMillis();
+				onKeyPress(currKey);
+			}
+		}
+	}
+	
+	public void onKeyPress(int keyCode)
+	{
+		if (selected)
+		{
+			if (keyCode == KeyEvent.VK_DELETE || keyCode == KeyEvent.VK_BACK_SPACE)
 			{
 				if (text.length() == 0)
 					return;
 				text = text.substring(0, text.length() - 1);
 				// TODO move cursor (entity?) left
-				//System.out.println("Delete pressed");************
+				System.out.println("Delete pressed");
 				return;
 			}
-			
-			for (int currKey = KeyEvent.VK_0; currKey < KeyEvent.VK_Z && currKey < keyboard.NUM_KEYS; currKey++) //  48 for 0, 57 for 9, 65 for A, 90 for Z. Will print = and ;
+			else if (text.length() == MAX_LENGTH)
 			{
-				if (text.length() == MAX_LENGTH)
-					return;
-
-				if (keyboard.isPressed(currKey))
-				{
-					//System.out.println(KeyEvent.getKeyText(currKey));**************
-					text.concat(KeyEvent.getKeyText(currKey));
-				}
+				System.out.println(KeyEvent.getKeyText(keyCode));
+				text.concat(KeyEvent.getKeyText(keyCode));
 				// TODO move cursor (entity?) right
 			}
 			// TODO update sprite!?
