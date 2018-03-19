@@ -13,6 +13,7 @@ public abstract class UITextBox extends Entity
 	private List<BoundingBox> boxes;
 	private String text = "";
 	private final int MAX_LENGTH;
+	private long lastTime;
 	
 	public UITextBox(int x, int y, Sprite unselectedSprite, Sprite selectedSprite, List<BoundingBox> boxes, int maxLength)
 	{
@@ -21,30 +22,38 @@ public abstract class UITextBox extends Entity
 		this.selectedSprite = selectedSprite;
 		this.boxes = boxes;
 		this.MAX_LENGTH = maxLength;
+		lastTime = System.currentTimeMillis();
 	}
 	
 	public void onKeyPress(Keyboard keyboard)
 	{
-		if (!selected)
-			return;
-		
-		if (keyboard.getLastPressed() == KeyEvent.VK_DELETE && keyboard.isPressed(KeyEvent.VK_DELETE))
+		if (selected && System.currentTimeMillis() - lastTime > 100) // TODO parallel array for full key press??? Ugly!
 		{
-			if (text.length() == 0)
+			lastTime = System.currentTimeMillis();
+			if (keyboard.isPressed(KeyEvent.VK_DELETE) || keyboard.isPressed(KeyEvent.VK_BACK_SPACE))
+			{
+				if (text.length() == 0)
+					return;
+				text = text.substring(0, text.length() - 1);
+				// TODO move cursor (entity?) left
+				//System.out.println("Delete pressed");************
 				return;
-			// remove end character
-			// move cursor left
-			System.out.println("Delete pressed");
-		} else
-		{
-			if (text.length() == MAX_LENGTH)
-				return;
-			// add character (adds weird ones???)
-			// move cursor right
-			System.out.println("Other pressed");
-		}
+			}
+			
+			for (int currKey = KeyEvent.VK_0; currKey < KeyEvent.VK_Z && currKey < keyboard.NUM_KEYS; currKey++) //  48 for 0, 57 for 9, 65 for A, 90 for Z. Will print = and ;
+			{
+				if (text.length() == MAX_LENGTH)
+					return;
 
-		//update sprite, move cursor (which is entity?), update string
+				if (keyboard.isPressed(currKey))
+				{
+					//System.out.println(KeyEvent.getKeyText(currKey));**************
+					text.concat(KeyEvent.getKeyText(currKey));
+				}
+				// TODO move cursor (entity?) right
+			}
+			// TODO update sprite!?
+		}
 	}
 	
 	public void onMousePress(int mouseX, int mouseY)

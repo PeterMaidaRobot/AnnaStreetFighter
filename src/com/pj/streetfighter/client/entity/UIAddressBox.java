@@ -12,4 +12,5 @@ public class UIAddressBox extends UITextBox
 	}
 
 	// TODO UIAddressBox calls super.update only if it is not a wrong key press
+	// will check for "." before calling super, if is there don't call super , otherwise call super, only numbers?
 }
