@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable
 	public final int HEIGHT = 756 / SCALE;
 	
 	private JFrame frame;
-	private Thread thread;
+	public Thread thread;
 	private GameStateManager manager;
 	
 	public Mouse mouse;

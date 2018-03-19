@@ -15,7 +15,7 @@ public class Menu extends GameState
 {
 	SpriteSheet menuSheet;
 	Sprite menuBackground;
-	UIButton connect;
+	UIButton connect, quit;
 	UIAddressBox address;
 	
 	public Menu(int width, int height)
@@ -33,12 +33,16 @@ public class Menu extends GameState
 		connectBoxes.add(new BoundingBox(6, 11, 62, 15));
 		connect = new UIButton(width/2, 3*(height/4), connectUnselected, connectSelected, connectBoxes);
 		
+		Sprite quitUnselected = new Sprite(64, 16, 128, 378, menuSheet);
+		Sprite quitSelected = new Sprite(64, 16, 192, 378, menuSheet);
+		quit = new UIButton(width/2, 3*(height/4) + 30, quitUnselected, quitSelected, connectBoxes);
+		
 		// create address text box
 		Sprite addressUnselected = new Sprite(128, 16, 256, 378, menuSheet);
-		Sprite addressSelected = new Sprite(128, 16, 320, 378, menuSheet);
+		Sprite addressSelected = new Sprite(128, 16, 384, 378, menuSheet);
 		List<BoundingBox> addressBoxes = new ArrayList<BoundingBox>();
 		addressBoxes.add(new BoundingBox(0, 0, 127, 15));
-		address = new UIAddressBox(width/2, 2*(height/4), addressUnselected, addressSelected, addressBoxes, 10);
+		address = new UIAddressBox(width/2, 3*(height/4) - 30, addressUnselected, addressSelected, addressBoxes, 10);
 	}
 	
 	@Override
@@ -56,13 +60,25 @@ public class Menu extends GameState
 	@Override
 	public void update(Game game)
 	{
+		int mouseX = game.mouse.getX();
+		int mouseY = game.mouse.getY();
+		
 		// need to call this code block for every UI element
 		address.onKeyPress(game.keyboard);
-		connect.update(false, game.mouse.getX(), game.mouse.getY());	
+		connect.update(false, mouseX, mouseY);	
+		quit.update(false, mouseX, mouseY);
 		if (game.mouse.isPressed())
 		{
-			connect.update(true, game.mouse.getX(), game.mouse.getY());	
-			game.connectionManager.doConnection = true;
+			connect.update(true, mouseX, mouseY);	
+			quit.update(true, mouseX, mouseY);
+			address.onMousePress(mouseX, mouseY);
+			//game.connectionManager.doConnection = true;
+		}
+		
+		if (quit.isSelected())
+		{
+			game.setRunning(false);
+			System.exit(0);
 		}
 	}
 
@@ -74,6 +90,8 @@ public class Menu extends GameState
 		
 		// draw all entities
 		map.drawSprite(connect.getSprite(), connect.getX(), connect.getY() + connect.yOffs);
+		map.drawSprite(quit.getSprite(), quit.getX(), quit.getY() + quit.yOffs);
+		map.drawSprite(address.getSprite(), address.getX(), address.getY());
 	}
 
 		

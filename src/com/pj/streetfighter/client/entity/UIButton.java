@@ -58,6 +58,11 @@ public class UIButton extends Entity
 		return hovered;
 	}
 	
+	public boolean isSelected()
+	{
+		return selected;
+	}
+	
 	@Override
 	public Sprite getSprite()
 	{
