@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.input.Keyboard;
 import com.pj.streetfighter.client.input.Mouse;
+import com.pj.streetfighter.client.network.ConnectionManager;
 import com.pj.streetfighter.client.state.Menu;
 
 public class Game extends Canvas implements Runnable 
@@ -29,6 +30,7 @@ public class Game extends Canvas implements Runnable
 	
 	public Mouse mouse;
 	public Keyboard keyboard;
+	public ConnectionManager connectionManager = new ConnectionManager();
 	
 	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);

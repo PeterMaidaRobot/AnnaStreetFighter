@@ -53,7 +53,7 @@ public class Menu extends GameState
 		connect.update(game.mouse.getX(), game.mouse.getY());	
 		if (connect.isPressed() && game.mouse.isPressed())
 		{
-			game.setRunning(false);
+			game.connectionManager.doConnection = true;
 		}
 	}
 
