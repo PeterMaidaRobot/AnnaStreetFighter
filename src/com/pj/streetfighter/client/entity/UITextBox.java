@@ -13,6 +13,8 @@ public abstract class UITextBox extends Entity
 	private List<BoundingBox> boxes;
 	private String text = "";
 	private final int MAX_LENGTH;
+	private int lastKey = 0;
+	private double lastTime = System.currentTimeMillis();
 	
 	public UITextBox(int x, int y, Sprite unselectedSprite, Sprite selectedSprite, List<BoundingBox> boxes, int maxLength)
 	{
@@ -25,11 +27,18 @@ public abstract class UITextBox extends Entity
 	
 	public void update(Keyboard keyboard)
 	{
-		//  46 for .,48 for 0, 57 for 9, 65 for A, 90 for Z. Will print = and ;
-		for (int currKey = KeyEvent.VK_PERIOD; currKey < KeyEvent.VK_Z && currKey < keyboard.NUM_KEYS; currKey++) 
+		//  checks if any keys are pressed, includes unknown keys
+		for (int currKey =  0; currKey < keyboard.NUM_KEYS; currKey++) 
 		{
-			if (keyboard.isPressed(currKey)) //TODO record if has been pushed
-				onKeyPress(currKey);
+			if (keyboard.isPressed(currKey)) {
+				if (lastKey != currKey || System.currentTimeMillis() - lastTime > 100)
+				{
+					onKeyPress(currKey);
+				}
+				lastKey = currKey;
+				lastTime = System.currentTimeMillis();
+				return; // two keys cannot be pressed down at once
+			}
 		}
 	}
 	
@@ -39,20 +48,20 @@ public abstract class UITextBox extends Entity
 		{
 			if (keyCode == KeyEvent.VK_DELETE || keyCode == KeyEvent.VK_BACK_SPACE)
 			{
-				System.out.println("Delete pressed");
 				if (text.length() == 0)
 					return;
 				text = text.substring(0, text.length() - 1);
 				// TODO move cursor (entity?) left
-				return;
 			}
 			else if (text.length() < MAX_LENGTH)
 			{
-				System.out.println(KeyEvent.getKeyText(keyCode));
-				//text = text.concat(KeyEvent.getKeyText(keyCode)); //TODO, uncomment, just too fast
+				text = text.concat(KeyEvent.getKeyText(keyCode));
 				// TODO move cursor (entity?) right
+			} else { // text.length() >= MAX_LENGTH
+				return; // TODO remove? ugly? might be necessary for updating sprite/graphic below
 			}
-			// TODO update sprite!?
+			System.out.println("Text: " + text); // TODO rm, used for testing
+			// TODO update sprite/graphic
 		}
 	}
 	
@@ -80,7 +89,7 @@ public abstract class UITextBox extends Entity
 	@Override
 	public Sprite getSprite()
 	{
-		// add the string to the sprite???
+		// TODO add the string to the sprite???
 		if (selected)
 			return selectedSprite;
 		else

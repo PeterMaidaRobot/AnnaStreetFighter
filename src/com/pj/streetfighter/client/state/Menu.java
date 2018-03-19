@@ -42,7 +42,7 @@ public class Menu extends GameState
 		Sprite addressSelected = new Sprite(128, 16, 384, 378, menuSheet);
 		List<BoundingBox> addressBoxes = new ArrayList<BoundingBox>();
 		addressBoxes.add(new BoundingBox(0, 0, 127, 15));
-		address = new UIAddressBox(width/2, 3*(height/4) - 30, addressUnselected, addressSelected, addressBoxes, 10);
+		address = new UIAddressBox(width/2, 3*(height/4) - 30, addressUnselected, addressSelected, addressBoxes);
 	}
 	
 	@Override
@@ -62,17 +62,22 @@ public class Menu extends GameState
 	{
 		int mouseX = game.mouse.getX();
 		int mouseY = game.mouse.getY();
-		boolean pressed = game.mouse.isPressed();
+		boolean mousePressed = game.mouse.isPressed();
 		
 		// need to call this code block for every UI element
 		address.update(game.keyboard);
-		connect.update(mouseX, mouseY, pressed);	
-		quit.update(mouseX, mouseY, pressed);
+		connect.update(mouseX, mouseY, mousePressed);	
+		quit.update(mouseX, mouseY, mousePressed);
 		
-		if (pressed)
+		if (mousePressed)
 		{
 			address.onMousePress(mouseX, mouseY);
 			//game.connectionManager.doConnection = true;
+		}
+		
+		if (connect.isSelected())
+		{
+			System.out.println("Here is the IP: " + address.getText()); // TODO connect it big boi
 		}
 		
 		if (quit.isSelected())
