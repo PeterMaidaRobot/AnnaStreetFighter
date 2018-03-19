@@ -5,10 +5,10 @@ import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener
 {
-	private boolean[] keys = new boolean[130]; // highest key is delete at 126
+	public final int NUM_KEYS = 130; // highest key is delete at 126?
+	private boolean[] keys = new boolean[NUM_KEYS];
 	private final int JUMP_MAP, CROUCH_MAP, LEFT_MAP, RIGHT_MAP, BLOCK_MAP, PUNCH_MAP, KICK_MAP;
 	public boolean jump, crouch, left, right, block, punch, kick;
-	private int lastPressed = 0;
 	
 	public Keyboard()
 	{
@@ -37,14 +37,15 @@ public class Keyboard implements KeyListener
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		lastPressed = e.getKeyCode();
-		keys[lastPressed] = true;
+		if (e.getKeyCode() < NUM_KEYS)
+			keys[e.getKeyCode()] = true;
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
-		keys[e.getKeyCode()] = false;
+		if (e.getKeyCode() < NUM_KEYS)
+			keys[e.getKeyCode()] = false;
 	}
 	
 	public void update()
@@ -61,12 +62,6 @@ public class Keyboard implements KeyListener
 	public boolean isPressed(int keyCode)
 	{
 		return keys[keyCode];
-	}
-	
-	public int getLastPressed()
-	{
-		// returns the KeyCode of the last pressed key
-		return lastPressed;
 	}
 	
 	
