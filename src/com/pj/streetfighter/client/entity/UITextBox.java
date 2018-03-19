@@ -39,17 +39,17 @@ public abstract class UITextBox extends Entity
 		{
 			if (keyCode == KeyEvent.VK_DELETE || keyCode == KeyEvent.VK_BACK_SPACE)
 			{
+				System.out.println("Delete pressed");
 				if (text.length() == 0)
 					return;
 				text = text.substring(0, text.length() - 1);
 				// TODO move cursor (entity?) left
-				System.out.println("Delete pressed");
 				return;
 			}
 			else if (text.length() < MAX_LENGTH)
 			{
 				System.out.println(KeyEvent.getKeyText(keyCode));
-				text.concat(KeyEvent.getKeyText(keyCode));
+				//text = text.concat(KeyEvent.getKeyText(keyCode)); //TODO, uncomment, just too fast
 				// TODO move cursor (entity?) right
 			}
 			// TODO update sprite!?
