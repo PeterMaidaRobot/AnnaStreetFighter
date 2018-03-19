@@ -13,8 +13,6 @@ public abstract class UITextBox extends Entity
 	private List<BoundingBox> boxes;
 	private String text = "";
 	private final int MAX_LENGTH;
-	private long lastTime;
-	private int lastKey;
 	
 	public UITextBox(int x, int y, Sprite unselectedSprite, Sprite selectedSprite, List<BoundingBox> boxes, int maxLength)
 	{
@@ -23,8 +21,6 @@ public abstract class UITextBox extends Entity
 		this.selectedSprite = selectedSprite;
 		this.boxes = boxes;
 		this.MAX_LENGTH = maxLength;
-		lastTime = System.currentTimeMillis();
-		lastKey = 0;
 	}
 	
 	public void update(Keyboard keyboard)
@@ -32,12 +28,8 @@ public abstract class UITextBox extends Entity
 		//  46 for .,48 for 0, 57 for 9, 65 for A, 90 for Z. Will print = and ;
 		for (int currKey = KeyEvent.VK_PERIOD; currKey < KeyEvent.VK_Z && currKey < keyboard.NUM_KEYS; currKey++) 
 		{
-			if (keyboard.isPressed(currKey) && (currKey != lastKey || System.currentTimeMillis() - lastTime > 100))
-			{
-				lastKey = currKey;
-				lastTime = System.currentTimeMillis();
+			if (keyboard.isPressed(currKey)) //TODO record if has been pushed
 				onKeyPress(currKey);
-			}
 		}
 	}
 	
@@ -54,7 +46,7 @@ public abstract class UITextBox extends Entity
 				System.out.println("Delete pressed");
 				return;
 			}
-			else if (text.length() == MAX_LENGTH)
+			else if (text.length() < MAX_LENGTH)
 			{
 				System.out.println(KeyEvent.getKeyText(keyCode));
 				text.concat(KeyEvent.getKeyText(keyCode));

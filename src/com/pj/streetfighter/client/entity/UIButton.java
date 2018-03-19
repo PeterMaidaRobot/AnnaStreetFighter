@@ -20,7 +20,7 @@ public class UIButton extends Entity
 		this.boxes = boxes;
 	}
 	
-	public void update(boolean pressed, int mouseX, int mouseY)
+	public void update(int mouseX, int mouseY, boolean pressed)
 	{
 		// the button is not hovered if the mouse is not over the button
 		hovered = false;
