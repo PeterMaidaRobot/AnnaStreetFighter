@@ -50,10 +50,13 @@ public class Menu extends GameState
 	public void update(Game game)
 	{
 		// need to call this code block for every Clickable UI element
-		connect.update(game.mouse.getX(), game.mouse.getY());	
-		if (connect.isPressed() && game.mouse.isPressed())
+		connect.update(false, game.mouse.getX(), game.mouse.getY());	
+		if (game.mouse.isPressed())
 		{
-			game.setRunning(false);
+			connect.update(true, game.mouse.getX(), game.mouse.getY());	
+			
+			//if (connect.isHovered())
+				//game.setRunning(false);
 		}
 	}
 
