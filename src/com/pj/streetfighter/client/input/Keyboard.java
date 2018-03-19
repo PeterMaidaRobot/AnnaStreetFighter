@@ -5,39 +5,40 @@ import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener
 {
-
-	private boolean[] keys = new boolean[120];
-	private final int jumpMap, crouchMap, leftMap, rightMap, blockMap, punchMap, kickMap;
+	private boolean[] keys = new boolean[130]; // highest key is delete at 126
+	private final int JUMP_MAP, CROUCH_MAP, LEFT_MAP, RIGHT_MAP, BLOCK_MAP, PUNCH_MAP, KICK_MAP;
 	public boolean jump, crouch, left, right, block, punch, kick;
+	private int lastPressed = 0;
 	
 	public Keyboard()
 	{
 		// sets to the default key bindings
-		jumpMap = KeyEvent.VK_UP;
-		crouchMap = KeyEvent.VK_DOWN;
-		leftMap = KeyEvent.VK_LEFT;
-		rightMap = KeyEvent.VK_RIGHT;
-		blockMap = KeyEvent.VK_Z;
-		punchMap = KeyEvent.VK_X;
-		kickMap = KeyEvent.VK_C;
+		JUMP_MAP = KeyEvent.VK_UP;
+		CROUCH_MAP = KeyEvent.VK_DOWN;
+		LEFT_MAP = KeyEvent.VK_LEFT;
+		RIGHT_MAP = KeyEvent.VK_RIGHT;
+		BLOCK_MAP = KeyEvent.VK_Z;
+		PUNCH_MAP = KeyEvent.VK_X;
+		KICK_MAP = KeyEvent.VK_C;
 	}
 	
 	public Keyboard(int upMap, int downMap, int leftMap, int rightMap, int blockMap, int punchMap, int kickMap)
 	{
 		// sets to custom key bindings
-		this.jumpMap = upMap;
-		this.crouchMap = downMap;
-		this.leftMap = leftMap;
-		this.rightMap = rightMap;
-		this.blockMap = blockMap;
-		this.punchMap = punchMap;
-		this.kickMap = kickMap;
+		this.JUMP_MAP = upMap;
+		this.CROUCH_MAP = downMap;
+		this.LEFT_MAP = leftMap;
+		this.RIGHT_MAP = rightMap;
+		this.BLOCK_MAP = blockMap;
+		this.PUNCH_MAP = punchMap;
+		this.KICK_MAP = kickMap;
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		keys[e.getKeyCode()] = true;
+		lastPressed = e.getKeyCode();
+		keys[lastPressed] = true;
 	}
 
 	@Override
@@ -48,13 +49,24 @@ public class Keyboard implements KeyListener
 	
 	public void update()
 	{
-		jump = keys[jumpMap];
-		crouch = keys[crouchMap];
-		left = keys[leftMap];
-		right = keys[rightMap];
-		block = keys[blockMap];
-		punch = keys[punchMap];
-		kick = keys[kickMap];
+		jump = keys[JUMP_MAP];
+		crouch = keys[CROUCH_MAP];
+		left = keys[LEFT_MAP];
+		right = keys[RIGHT_MAP];
+		block = keys[BLOCK_MAP];
+		punch = keys[PUNCH_MAP];
+		kick = keys[KICK_MAP];
+	}
+	
+	public boolean isPressed(int keyCode)
+	{
+		return keys[keyCode];
+	}
+	
+	public int getLastPressed()
+	{
+		// returns the KeyCode of the last pressed key
+		return lastPressed;
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pj.streetfighter.client.entity.BoundingBox;
+import com.pj.streetfighter.client.entity.UIAddressBox;
 import com.pj.streetfighter.client.entity.UIButton;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
@@ -15,6 +16,7 @@ public class Menu extends GameState
 	SpriteSheet menuSheet;
 	Sprite menuBackground;
 	UIButton connect;
+	UIAddressBox address;
 	
 	public Menu(int width, int height)
 	{
@@ -30,6 +32,13 @@ public class Menu extends GameState
 		connectBoxes.add(new BoundingBox(3, 4, 60, 10));
 		connectBoxes.add(new BoundingBox(6, 11, 62, 15));
 		connect = new UIButton(width/2, 3*(height/4), connectUnselected, connectSelected, connectBoxes);
+		
+		// create address text box
+		Sprite addressUnselected = new Sprite(128, 16, 256, 378, menuSheet);
+		Sprite addressSelected = new Sprite(128, 16, 320, 378, menuSheet);
+		List<BoundingBox> addressBoxes = new ArrayList<BoundingBox>();
+		addressBoxes.add(new BoundingBox(0, 0, 127, 15));
+		address = new UIAddressBox(width/2, 2*(height/4), addressUnselected, addressSelected, addressBoxes, 10);
 	}
 	
 	@Override
@@ -47,7 +56,8 @@ public class Menu extends GameState
 	@Override
 	public void update(Game game)
 	{
-		// need to call this code block for every Clickable UI element
+		// need to call this code block for every UI element
+		address.onKeyPress(game.keyboard);
 		connect.update(false, game.mouse.getX(), game.mouse.getY());	
 		if (game.mouse.isPressed())
 		{

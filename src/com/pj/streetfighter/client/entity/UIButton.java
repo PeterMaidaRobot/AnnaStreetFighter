@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pj.streetfighter.client.graphics.Sprite;
 
-public class UIButton extends Entity implements Clickable
+public class UIButton extends Entity
 {
 	private boolean hovered = false, selected = false, selectBounce = true;
 	public short yOffs = 0;
@@ -53,16 +53,9 @@ public class UIButton extends Entity implements Clickable
 		}
 	}
 	
-	@Override
 	public boolean isHovered()
 	{
 		return hovered;
-	}
-	
-	@Override
-	public void onPressed()
-	{
-		
 	}
 	
 	@Override
