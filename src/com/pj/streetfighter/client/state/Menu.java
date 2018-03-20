@@ -77,7 +77,7 @@ public class Menu extends GameState
 		
 		if (connect.isSelected())
 		{
-			System.out.println("Here is the IP: " + address.getText()); // TODO connect it big boi
+			System.out.println("Here is the IP: " + address.getText());
 		}
 		
 		if (quit.isSelected())

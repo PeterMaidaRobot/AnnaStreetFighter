@@ -39,7 +39,6 @@ public class ConnectionManager extends Listener implements Runnable
 			{
 				
 				try {
-					System.out.println("Ummmm.... bet.");
 					status = ConnectionStatus.CONNECTING;
 					client.connect(1000, "130.215.169.203", TCP_PORT, UDP_PORT);
 					status = ConnectionStatus.CONNECTED;
