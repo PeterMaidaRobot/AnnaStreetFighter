@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable
 	
 	public JFrame frame;
 	public Thread thread;
-	private GameStateManager manager;
+	public GameStateManager manager;
 	
 	public Mouse mouse;
 	public Keyboard keyboard;
@@ -35,9 +35,6 @@ public class Game extends Canvas implements Runnable
 	private Bitmap bitmap = new Bitmap(WIDTH, HEIGHT);
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-	
-	// TODO maybe should be replaced with game state logic later
-	private boolean running;
 	
 	public Game()
 	{
@@ -64,22 +61,15 @@ public class Game extends Canvas implements Runnable
 		frame.setVisible(true);
 	}
 	
-	public void setRunning(boolean isRunning)
-	{
-		running = isRunning;
-	}
-	
 	public synchronized void start()
 	{
 		/* any code that needs to be executed before game runs */
-		running = true;
 		thread.start();
 	}
 	
 	public synchronized void stop()
 	{
 		/* any code that needs to be executed before game closes */
-		running = false;
 		try
 		{
 			thread.join();
@@ -100,7 +90,7 @@ public class Game extends Canvas implements Runnable
 		int frames = 0;
 		int updates = 0;
 		
-		while (running)
+		while (!manager.stack.isEmpty())
 		{
 			long currTime = System.nanoTime();
 			delta += (currTime - lastTime) / ns;

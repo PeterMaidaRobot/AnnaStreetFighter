@@ -91,7 +91,7 @@ public class Menu extends GameState
 		// stop game if quit is selected
 		if (quit.isSelected())
 		{
-			game.setRunning(false);
+			game.manager.pop();
 			game.frame.dispose();
 			System.exit(0);
 		}
