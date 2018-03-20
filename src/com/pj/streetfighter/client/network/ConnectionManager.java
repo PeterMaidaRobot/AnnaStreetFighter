@@ -1,7 +1,5 @@
 package com.pj.streetfighter.client.network;
 
-import java.io.IOException;
-
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -10,11 +8,10 @@ public class ConnectionManager extends Listener implements Runnable
 {
 	
 	private Client client;
-	public boolean doConnection = false;
-	private Thread thread = new Thread(this, "ConnectionManager");
 	public ConnectionStatus status = ConnectionStatus.NOT_CONNECTED;
 	public static final int TCP_PORT = 60001;
 	public static final int UDP_PORT = 60002;
+	public String serverIP = null;
 	
 	public ConnectionManager()
 	{
@@ -22,7 +19,6 @@ public class ConnectionManager extends Listener implements Runnable
 		client.getKryo().register(MenuPacket.class);
 		client.addListener(this);
 		client.start();
-		thread.start();
 	}
 	
 	public void received(Connection c, Object p)
@@ -33,22 +29,23 @@ public class ConnectionManager extends Listener implements Runnable
 	@Override
 	public void run()
 	{
-		while(true)
+		try
 		{
-			if (doConnection)
-			{
-				
-				try {
-					status = ConnectionStatus.CONNECTING;
-					client.connect(1000, "130.215.169.203", TCP_PORT, UDP_PORT);
-					status = ConnectionStatus.CONNECTED;
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					status = ConnectionStatus.FAILED;
-				}
-				doConnection = false;
-			}
+			status = ConnectionStatus.CONNECTING;
+			client.connect(10000, "130.215.8.130", TCP_PORT, UDP_PORT);
+			status = ConnectionStatus.CONNECTED;
 		}
+		catch (Exception e)
+		{
+			status = ConnectionStatus.FAILED;
+		}		
 	}
-
+	
+	public boolean canConnect()
+	{
+		// want a nice boolean for if the connection manager will allow connections
+		// but can't happen if buttons stays selected when not hovered because
+		// game will automatically try to reconnect after failing
+		return !(status == ConnectionStatus.CONNECTING || status == ConnectionStatus.CONNECTED);
+	}
 }

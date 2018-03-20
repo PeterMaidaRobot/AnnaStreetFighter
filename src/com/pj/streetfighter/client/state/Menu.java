@@ -3,6 +3,8 @@ package com.pj.streetfighter.client.state;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import com.pj.streetfighter.client.entity.BoundingBox;
 import com.pj.streetfighter.client.entity.UIAddressBox;
 import com.pj.streetfighter.client.entity.UIButton;
@@ -13,16 +15,17 @@ import com.pj.streetfighter.client.main.Game;
 
 public class Menu extends GameState
 {
-	SpriteSheet menuSheet;
-	Sprite menuBackground;
+	SpriteSheet menuSheet = new SpriteSheet("/character_sprites/menusheet.png", 640);
+	Sprite menuBackground = new Sprite(640, 378, 0, 0, menuSheet);
+	
 	UIButton connect, quit;
 	UIAddressBox address;
+	
+	boolean flag = false;
 	
 	public Menu(int width, int height)
 	{
 		super(width, height);
-		menuSheet = new SpriteSheet("/character_sprites/menusheet.png", 640);
-		menuBackground = new Sprite(640, 378, 0, 0, menuSheet);
 		
 		// create connect button
 		Sprite connectUnselected = new Sprite(64, 16, 0, 378, menuSheet);
@@ -33,6 +36,7 @@ public class Menu extends GameState
 		connectBoxes.add(new BoundingBox(6, 11, 62, 15));
 		connect = new UIButton(width/2, 3*(height/4), connectUnselected, connectSelected, connectBoxes);
 		
+		// create quit button
 		Sprite quitUnselected = new Sprite(64, 16, 128, 378, menuSheet);
 		Sprite quitSelected = new Sprite(64, 16, 192, 378, menuSheet);
 		quit = new UIButton(width/2, 3*(height/4) + 30, quitUnselected, quitSelected, connectBoxes);
@@ -72,14 +76,18 @@ public class Menu extends GameState
 		if (mousePressed)
 		{
 			address.onMousePress(mouseX, mouseY);
-			//game.connectionManager.doConnection = true;
 		}
-		
-		if (connect.isSelected())
+
+		// if connect is pressed game isn't connecting to server
+		if (connect.isSelected() && !flag)
 		{
-			System.out.println("Here is the IP: " + address.getText());
+			// connect to server using string typed in text box
+			game.connectionManager.serverIP = address.getText();
+			SwingUtilities.invokeLater(game.connectionManager);
+			flag = true;
 		}
 		
+		// stop game if quit is selected
 		if (quit.isSelected())
 		{
 			game.setRunning(false);
