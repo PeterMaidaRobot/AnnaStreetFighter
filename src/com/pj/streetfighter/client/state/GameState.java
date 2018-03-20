@@ -14,7 +14,7 @@ public abstract class GameState
 		HEIGHT = height;
 	}
 	
-	public void onEnter() {}
+	public void onEnter(Game game) {}
 	public void onExit() {}
 	public void update(Game game) {}
 	public void render(Bitmap map) {}

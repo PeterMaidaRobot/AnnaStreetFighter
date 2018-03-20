@@ -15,9 +15,9 @@ public class GameStateManager
 		stack = new ArrayDeque<GameState>();
 	}
 	
-	public void push(GameState state)
+	public void push(Game game, GameState state)
 	{
-		state.onEnter();
+		state.onEnter(game);
 		stack.push(state);
 	}
 	

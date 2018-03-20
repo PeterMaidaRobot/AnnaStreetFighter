@@ -12,6 +12,7 @@ import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.main.Game;
+import com.pj.streetfighter.client.network.ConnectionStatus;
 
 public class Menu extends GameState
 {
@@ -50,9 +51,9 @@ public class Menu extends GameState
 	}
 	
 	@Override
-	public void onEnter()
+	public void onEnter(Game game)
 	{
-		
+		game.connectionManager.status = ConnectionStatus.NOT_CONNECTED;
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class Menu extends GameState
 		}
 
 		// if connect is pressed game isn't connecting to server
-		if (connect.isSelected() && !flag)
+		if (connect.isSelected() && !flag /* game.connectionManager.canConnect() */)
 		{
 			// connect to server using string typed in text box
 			game.connectionManager.serverIP = address.getText();

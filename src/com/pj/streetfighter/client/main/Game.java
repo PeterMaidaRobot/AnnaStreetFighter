@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable
 		mouse = new Mouse();
 		keyboard = new Keyboard();
 		manager = new GameStateManager();
-		manager.push(new Menu(WIDTH, HEIGHT));
+		manager.push(this, new Menu(WIDTH, HEIGHT));
 		
 		addKeyListener(keyboard);
 		addMouseListener(mouse);

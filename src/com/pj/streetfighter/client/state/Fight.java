@@ -11,7 +11,7 @@ public class Fight extends GameState{
 	}
 
 	@Override
-	public void onEnter() {
+	public void onEnter(Game game) {
 		// TODO Auto-generated method stub
 		
 	}
