@@ -4,6 +4,7 @@ import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.main.Game;
+import com.pj.streetfighter.client.network.MenuPacket;
 
 public class Fight extends GameState{
 
@@ -12,6 +13,8 @@ public class Fight extends GameState{
 	
 	SpriteSheet player1Sheet = new SpriteSheet("/character_sprites/prometheus.png", 64);
 	Sprite player1 = new Sprite(64, 64, 0, 0, player1Sheet);
+	
+	Object packet = null;
 	
 	public Fight(int width, int height)
 	{
@@ -33,7 +36,12 @@ public class Fight extends GameState{
 	@Override
 	public void update(Game game)
 	{
-		player1.setX(player1.getX() + 1);
+		packet = game.connectionManager.mostRecentPacket;
+		if (packet != null && packet instanceof MenuPacket)
+		{
+			MenuPacket newPacket = (MenuPacket) packet;
+			player1.setX(player1.getX() + newPacket.offset);
+		}
 	}
 
 	@Override
