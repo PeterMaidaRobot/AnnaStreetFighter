@@ -13,6 +13,7 @@ import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.main.Game;
 import com.pj.streetfighter.client.network.ConnectionStatus;
+import com.pj.streetfighter.server.packet.StatePacket;
 
 public class Menu extends GameState
 {
@@ -94,6 +95,14 @@ public class Menu extends GameState
 			game.manager.pop();
 			game.frame.dispose();
 			System.exit(0);
+		}
+		
+		Object packet = game.connectionManager.mostRecentPacket;
+		if (packet instanceof StatePacket)
+		{
+			int state = ((StatePacket) packet).state;
+			if (state == StatePacket.FIGHT)
+				game.manager.push(game, new Fight(this.WIDTH,this.HEIGHT));
 		}
 	}
 
