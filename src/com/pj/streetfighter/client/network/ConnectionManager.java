@@ -8,9 +8,10 @@ public class ConnectionManager extends Listener implements Runnable
 {
 	
 	private Client client;
+	private static final int TCP_PORT = 60001;
+	private static final int UDP_PORT = 60002;
+	
 	public ConnectionStatus status = ConnectionStatus.NOT_CONNECTED;
-	public static final int TCP_PORT = 60001;
-	public static final int UDP_PORT = 60002;
 	public String serverIP = null;
 	
 	public ConnectionManager()
@@ -32,13 +33,14 @@ public class ConnectionManager extends Listener implements Runnable
 		try
 		{
 			status = ConnectionStatus.CONNECTING;
-			client.connect(10000, "130.215.8.130", TCP_PORT, UDP_PORT);
+			client.connect(10000, "130.215.8.213", TCP_PORT, UDP_PORT);
 			status = ConnectionStatus.CONNECTED;
 		}
 		catch (Exception e)
 		{
 			status = ConnectionStatus.FAILED;
-		}		
+		}	
+		System.out.println(status.toString());
 	}
 	
 	public boolean canConnect()
@@ -47,5 +49,10 @@ public class ConnectionManager extends Listener implements Runnable
 		// but can't happen if buttons stays selected when not hovered because
 		// game will automatically try to reconnect after failing
 		return !(status == ConnectionStatus.CONNECTING || status == ConnectionStatus.CONNECTED);
+	}
+	
+	public boolean isConnected()
+	{
+		return status == ConnectionStatus.CONNECTED;
 	}
 }
