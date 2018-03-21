@@ -36,7 +36,7 @@ public class GameServer extends Listener
 			// updates capped at 60 times per second
 			while (delta >= 1)
 			{
-				if (server.getConnections().length != 1)
+				if (server.getConnections().length == 1)
 					update();
 				delta--;
 			}
@@ -60,7 +60,9 @@ public class GameServer extends Listener
 	
 	private static void update()
 	{
-		server.sendToAllUDP(new MenuPacket(counter));
+		MenuPacket packet = new MenuPacket();
+		packet.offset = counter;
+		server.sendToAllUDP(packet);
 		counter++;
 	}
 }
