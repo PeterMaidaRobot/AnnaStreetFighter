@@ -14,6 +14,8 @@ public class ConnectionManager extends Listener implements Runnable
 	public ConnectionStatus status = ConnectionStatus.NOT_CONNECTED;
 	public String serverIP = null;
 	
+	public Object mostRecentPacket = null; 
+	
 	public ConnectionManager()
 	{
 		client  = new Client();
@@ -24,7 +26,7 @@ public class ConnectionManager extends Listener implements Runnable
 	
 	public void received(Connection c, Object p)
 	{
-		
+		mostRecentPacket = p;
 	}
 
 	@Override
