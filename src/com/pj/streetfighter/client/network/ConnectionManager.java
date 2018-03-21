@@ -47,9 +47,6 @@ public class ConnectionManager extends Listener implements Runnable
 	
 	public boolean canConnect()
 	{
-		// want a nice boolean for if the connection manager will allow connections
-		// but can't happen if buttons stays selected when not hovered because
-		// game will automatically try to reconnect after failing
 		return !(status == ConnectionStatus.CONNECTING || status == ConnectionStatus.CONNECTED);
 	}
 	

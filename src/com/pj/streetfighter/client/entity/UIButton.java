@@ -6,7 +6,7 @@ import com.pj.streetfighter.client.graphics.Sprite;
 
 public class UIButton extends Entity
 {
-	private boolean hovered = false, selected = false, selectBounce = true;
+	private boolean hovered = false, selected = false;
 	public short yOffs = 0;
 	private Oscillator yOsc = new Oscillator((short) 0, (short) 5, (float) 0.23);
 	private Sprite unselectedSprite, selectedSprite;
@@ -61,6 +61,11 @@ public class UIButton extends Entity
 	public boolean isSelected()
 	{
 		return selected;
+	}
+	
+	public void setSelected(boolean selected)
+	{
+		this.selected = selected;
 	}
 	
 	@Override

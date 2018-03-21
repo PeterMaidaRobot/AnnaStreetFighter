@@ -22,7 +22,6 @@ public class Menu extends GameState
 	UIButton connect, quit;
 	UIAddressBox address;
 	
-	boolean flag = false;
 	
 	public Menu(int width, int height)
 	{
@@ -80,12 +79,12 @@ public class Menu extends GameState
 		}
 
 		// if connect is pressed game isn't connecting to server
-		if (connect.isSelected() && !flag /* game.connectionManager.canConnect() */)
+		if (connect.isSelected() && game.connectionManager.canConnect())
 		{
 			// connect to server using string typed in text box
 			game.connectionManager.serverIP = address.getText();
 			SwingUtilities.invokeLater(game.connectionManager);
-			flag = true;
+			connect.setSelected(false);
 			game.manager.push(game, new Fight(this.WIDTH, this.HEIGHT)); // TODO actually pushes Loading or Selection state
 		}
 		
