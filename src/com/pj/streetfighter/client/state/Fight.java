@@ -4,7 +4,6 @@ import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.main.Game;
-import com.pj.streetfighter.client.network.MenuPacket;
 
 public class Fight extends GameState{
 
@@ -36,12 +35,7 @@ public class Fight extends GameState{
 	@Override
 	public void update(Game game)
 	{
-		packet = game.connectionManager.mostRecentPacket;
-		if (packet != null && packet instanceof MenuPacket)
-		{
-			MenuPacket newPacket = (MenuPacket) packet;
-			player1.setX(player1.getX() + newPacket.offset);
-		}
+		player1.setX(player1.getX() + 1);
 	}
 
 	@Override

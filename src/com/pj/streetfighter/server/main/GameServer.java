@@ -6,8 +6,9 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
-import com.pj.streetfighter.client.network.MenuPacket;
 import com.pj.streetfighter.server.entity.Player;
+import com.pj.streetfighter.server.packet.StatePacket;
+import com.pj.streetfighter.server.state.ServerState;
 
 public class GameServer extends Listener
 {
@@ -15,14 +16,15 @@ public class GameServer extends Listener
 	private static final int TCP_PORT = 60001;
 	private static final int UDP_PORT = 60002;
 	
-	private Player p1 = null;
-	private Player p2 = null;
+	private static ServerState status = ServerState.WAITING_FOR_CONNECTION;
+	private static Player p1 = null;
+	private static Player p2 = null;
 	
 	public static void main (String[] args) throws IOException
 	{
 		// create and start server
 		server = new Server();
-		server.getKryo().register(MenuPacket.class);
+		server.getKryo().register(StatePacket.class);
 		server.bind(TCP_PORT, UDP_PORT);
 		server.addListener(new GameServer());
 		server.start();
@@ -40,8 +42,7 @@ public class GameServer extends Listener
 			// updates capped at 30 times per second
 			while (delta >= 1)
 			{
-				if (server.getConnections().length == 1)
-					update();
+				update();
 				delta--;
 			}
 		}
@@ -69,21 +70,52 @@ public class GameServer extends Listener
 		{
 			p2 = null;
 		}
+		StatePacket goToMenu = new StatePacket();
+		goToMenu.state = StatePacket.MENU;
+		server.sendToAllTCP(goToMenu);
 	}
 	
 	public void received(Connection c, Object packet)
 	{
-		
+		if (p1 != null && p1.c.equals(c))
+		{
+			p1.mostRecent = packet;
+		}
+		else if (p2 != null && p2.c.equals(c))
+		{
+			p2.mostRecent = packet;
+		}
 	}
 	
 	private static void update()
 	{
-		MenuPacket packet = new MenuPacket();
-		server.sendToAllUDP(packet);
+		switch (status)
+		{
+			case WAITING_FOR_CONNECTION:
+				updateMenu();
+			case WAITING_IN_SELECTION:
+				updateSelection();
+			case FIGHT:
+				updateFight();
+		}
 	}
 	
-	private static void sendFightPacket()
+	private static void updateFight() {
+		
+	}
+
+	private static void updateSelection()
 	{
 		
+	}
+
+	private static void updateMenu()
+	{
+		if (p1 != null && p2 != null)
+		{
+			StatePacket goToSelection = new StatePacket();
+			goToSelection.state = StatePacket.SELECTION;
+			server.sendToAllTCP(goToSelection);
+		}
 	}
 }
