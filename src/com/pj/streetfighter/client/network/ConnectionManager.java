@@ -27,8 +27,10 @@ public class ConnectionManager extends Listener implements Runnable
 	
 	public void received(Connection c, Object p)
 	{
-		System.out.println("received packet :D");
-		mostRecentPacket = p;
+		if (isGamePacket(p))
+		{
+			mostRecentPacket = p;
+		}
 	}
 
 	@Override
@@ -55,5 +57,10 @@ public class ConnectionManager extends Listener implements Runnable
 	public boolean isConnected()
 	{
 		return status == ConnectionStatus.CONNECTED;
+	}
+	
+	public boolean isGamePacket(Object p)
+	{
+		return p instanceof StatePacket;
 	}
 }

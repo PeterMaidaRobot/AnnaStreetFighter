@@ -23,7 +23,6 @@ public class Menu extends GameState
 	UIButton connect, quit;
 	UIAddressBox address;
 	
-	
 	public Menu(int width, int height)
 	{
 		super(width, height);

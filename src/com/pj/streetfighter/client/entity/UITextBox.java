@@ -72,7 +72,6 @@ public abstract class UITextBox extends Entity
 			} else { // text.length() >= MAX_LENGTH
 				return; // TODO remove? ugly? might be necessary for updating sprite/graphic below
 			}
-			System.out.println("Text: " + text); // TODO rm, used for testing
 			// TODO update sprite/graphic
 		}
 	}

@@ -30,7 +30,7 @@ public class GameServer extends Listener
 		server.start();
 		
 		long lastTime = System.nanoTime();
-		final double ns = 1000000000.0 / 30.0;
+		final double ns = 1000000000.0 / 1.0;
 		double delta = 0;
 		
 		while (true)
@@ -50,7 +50,7 @@ public class GameServer extends Listener
 
 	public void connected(Connection c)
 	{
-		System.out.println("received connection!");
+		System.out.println("received connection");
 		if (p1 == null)
 		{
 			p1 = new Player(c);
@@ -89,7 +89,7 @@ public class GameServer extends Listener
 	}
 	
 	private static void update()
-	{
+	{		
 		switch (status)
 		{
 			case WAITING_FOR_CONNECTION:
