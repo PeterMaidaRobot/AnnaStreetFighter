@@ -116,6 +116,7 @@ public class GameServer extends Listener
 			StatePacket goToSelection = new StatePacket();
 			goToSelection.state = StatePacket.SELECTION;
 			server.sendToAllTCP(goToSelection);
+			status = ServerState.WAITING_IN_SELECTION;
 		}
 	}
 }
