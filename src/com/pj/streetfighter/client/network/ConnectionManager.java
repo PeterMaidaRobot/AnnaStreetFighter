@@ -27,6 +27,7 @@ public class ConnectionManager extends Listener implements Runnable
 	
 	public void received(Connection c, Object p)
 	{
+		System.out.println("received packet :D");
 		mostRecentPacket = p;
 	}
 
