@@ -8,9 +8,10 @@ import com.pj.streetfighter.client.graphics.Sprite;
 public class UIAddressBox extends UITextBox
 {
 
-	public UIAddressBox(int x, int y, Sprite unselectedSprite, Sprite selectedSprite, List<BoundingBox> boxes)
+	public UIAddressBox(int x, int y, Sprite unselectedSprite, Sprite selectedSprite, List<BoundingBox> boxes,
+			int horizontalPadding, int verticalPadding)
 	{
-		super(x, y, unselectedSprite, selectedSprite, boxes, 15); // an IP Address is 15 character long, including periods
+		super(x, y, unselectedSprite, selectedSprite, boxes, 15, horizontalPadding, verticalPadding); // an IP Address is 15 character long, including periods
 	}
 	
 	public void onKeyPress(int keyCode)

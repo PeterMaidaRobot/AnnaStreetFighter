@@ -46,7 +46,7 @@ public class Menu extends GameState
 		Sprite addressSelected = new Sprite(128, 16, 384, 378, menuSheet);
 		List<BoundingBox> addressBoxes = new ArrayList<BoundingBox>();
 		addressBoxes.add(new BoundingBox(0, 0, 127, 15));
-		address = new UIAddressBox(width/2, 3*(height/4) - 30, addressUnselected, addressSelected, addressBoxes);
+		address = new UIAddressBox(width/2, 3*(height/4) - 30, addressUnselected, addressSelected, addressBoxes, 8, 4);
 	}
 	
 	@Override

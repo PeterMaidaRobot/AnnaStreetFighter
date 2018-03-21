@@ -23,6 +23,17 @@ public class Sprite {
 		load();
 	}
 	
+	public Sprite (Sprite sprite)
+	{
+		this.X_SIZE = sprite.X_SIZE;
+		this.Y_SIZE = sprite.Y_SIZE;
+		this.x = sprite.x;
+		this.y = sprite.y;
+		this.pixels = new int[X_SIZE * Y_SIZE];
+		System.arraycopy(sprite.pixels, 0, this.pixels, 0, sprite.pixels.length);
+		this.sheet = sprite.sheet;
+	}
+	
 	private void load()
 	{
 		for (int y = 0; y < Y_SIZE; y++)
@@ -62,5 +73,29 @@ public class Sprite {
 	public int getYSIZE()
 	{
 		return Y_SIZE;
+	}
+	
+	public void addSprite(Sprite sprite, int x, int y)
+	{
+		// insert the given sprite into the bitmap's pixels array
+		for (int yy = y; yy < y + sprite.getYSIZE(); yy++)
+		{
+			for (int xx = x; xx < x + sprite.getXSIZE(); xx++)
+			{
+				// do not store an off screen pixel
+				if (yy < 0 || yy > Y_SIZE || xx < 0 || xx > X_SIZE)
+				{
+					continue;
+				}
+				// do not store this "transparent" pixel color in the array
+				if (sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] == 0xFFFF00FF)
+				{
+					continue;
+				}
+				
+				pixels[xx + yy * X_SIZE] = sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()];
+			}
+		}
+		
 	}
 }
