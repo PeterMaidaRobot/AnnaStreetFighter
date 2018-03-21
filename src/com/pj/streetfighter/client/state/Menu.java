@@ -86,6 +86,7 @@ public class Menu extends GameState
 			game.connectionManager.serverIP = address.getText();
 			SwingUtilities.invokeLater(game.connectionManager);
 			flag = true;
+			game.manager.push(game, new Fight(this.WIDTH, this.HEIGHT)); // TODO actually pushes Loading or Selection state
 		}
 		
 		// stop game if quit is selected
