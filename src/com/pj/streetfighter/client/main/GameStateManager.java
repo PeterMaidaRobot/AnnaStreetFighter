@@ -4,7 +4,11 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
+import com.pj.streetfighter.client.state.Fight;
 import com.pj.streetfighter.client.state.GameState;
+import com.pj.streetfighter.client.state.Menu;
+import com.pj.streetfighter.client.state.Selection;
+import com.pj.streetfighter.server.packet.StatePacket;
 
 public class GameStateManager
 {
@@ -40,5 +44,41 @@ public class GameStateManager
 		if(!stack.isEmpty())
 			stack.peek().render(bitmap);
 		
+	}
+	
+	public void receiveUpdate(Game game, StatePacket p)
+	{
+		if (stack.peek() instanceof Menu)
+		{
+			if (p.state == StatePacket.SELECTION)
+			{
+				this.push(game, new Selection(game.WIDTH, game.HEIGHT));
+			} else if (p.state == StatePacket.FIGHT)
+			{
+				this.push(game, new Fight(game.WIDTH, game.HEIGHT));
+			}
+		}
+		else if (stack.peek() instanceof Selection)
+		{
+			if (p.state == StatePacket.MENU)
+			{
+				this.pop();
+			}
+			else if (p.state == StatePacket.FIGHT)
+			{
+				this.push(game, new Fight(game.WIDTH, game.HEIGHT));
+			}
+		} else if (stack.peek() instanceof Fight)
+		{
+			if (p.state == StatePacket.SELECTION)
+			{
+				this.pop();
+			}
+			else if (p.state == StatePacket.MENU)
+			{
+				this.pop();
+				this.pop();
+			}
+		}
 	}
 }

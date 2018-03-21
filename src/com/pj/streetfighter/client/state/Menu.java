@@ -79,12 +79,11 @@ public class Menu extends GameState
 		}
 
 		// if connect is pressed game isn't connecting to server
-		if (connect.isSelected() && game.connectionManager.canConnect())
+		if (connect.isSelected() && mousePressed && game.connectionManager.canConnect())
 		{
 			// connect to server using string typed in text box
 			game.connectionManager.serverIP = address.getText();
 			SwingUtilities.invokeLater(game.connectionManager);
-			connect.setSelected(false);
 		}
 		
 		// stop game if quit is selected
@@ -95,12 +94,11 @@ public class Menu extends GameState
 			System.exit(0);
 		}
 		
+		// if server is telling game to change state, send to GameStateManager
 		Object packet = game.connectionManager.mostRecentPacket;
 		if (packet instanceof StatePacket)
 		{
-			int state = ((StatePacket) packet).state;
-			if (state == StatePacket.FIGHT)
-				game.manager.push(game, new Fight(this.WIDTH,this.HEIGHT));
+			game.manager.receiveUpdate(game, (StatePacket) packet);
 		}
 	}
 
