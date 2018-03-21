@@ -50,6 +50,7 @@ public class GameServer extends Listener
 
 	public void connected(Connection c)
 	{
+		System.out.println("received connection!");
 		if (p1 == null)
 		{
 			p1 = new Player(c);
