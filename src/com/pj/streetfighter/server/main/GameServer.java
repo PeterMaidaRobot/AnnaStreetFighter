@@ -118,11 +118,11 @@ public class GameServer extends Listener
 			short input = ((ClientFightPacket) p1.mostRecent).keyboardInput;
 			if ((input & FightPacketDictionary.LEFT) != 0)
 			{
-				p1.x--;
+				p1.x -= 8;
 			} 
 			if ((input & FightPacketDictionary.RIGHT) != 0)
 			{
-				p1.x++;
+				p1.x += 8;
 			}
 		}
 		if (p2Packet instanceof ClientFightPacket)
@@ -130,11 +130,11 @@ public class GameServer extends Listener
 			short input = ((ClientFightPacket) p2.mostRecent).keyboardInput;
 			if ((input & FightPacketDictionary.LEFT) != 0)
 			{
-				p2.x--;
+				p2.x -= 8;
 			} 
 			if ((input & FightPacketDictionary.RIGHT) != 0)
 			{
-				p2.x++;
+				p2.x += 8;
 			}
 		}
 		
@@ -162,6 +162,11 @@ public class GameServer extends Listener
 			goToSelection.state = StatePacket.FIGHT;
 			server.sendToAllTCP(goToSelection);
 			status = ServerState.FIGHT;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
