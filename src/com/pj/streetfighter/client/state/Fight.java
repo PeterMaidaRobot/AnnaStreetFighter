@@ -3,7 +3,11 @@ package com.pj.streetfighter.client.state;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
+import com.pj.streetfighter.client.input.Keyboard;
 import com.pj.streetfighter.client.main.Game;
+import com.pj.streetfighter.network.ClientFightPacket;
+import com.pj.streetfighter.network.FightPacketDictionary;
+import com.pj.streetfighter.network.ServerFightPacket;
 
 public class Fight extends GameState{
 
@@ -11,9 +15,10 @@ public class Fight extends GameState{
 	Sprite fightBackground = new Sprite(640, 378, 0, 0, fightSheet);
 	
 	SpriteSheet player1Sheet = new SpriteSheet("/character_sprites/prometheus.png", 64);
-	Sprite player1 = new Sprite(64, 64, 0, 0, player1Sheet);
+	Sprite player1 = new Sprite(64, 64, 0, 243, player1Sheet);
+	Sprite player2 = new Sprite(64, 64, 0, 243, player1Sheet);
 	
-	Object packet = null;
+	ServerFightPacket packet = null;
 	
 	public Fight(int width, int height)
 	{
@@ -36,13 +41,49 @@ public class Fight extends GameState{
 	public void update(Game game)
 	{
 		player1.setX(player1.getX() + 1);
+		
+		// create the client fight packet from the keyboard presses
+		Keyboard keyboard = game.keyboard;
+		ClientFightPacket sendingPacket = new ClientFightPacket();
+		short keysPressed = 0;
+		if (keyboard.jump)
+			keysPressed = (short) (keysPressed | FightPacketDictionary.JUMP);
+		if (keyboard.crouch)
+			keysPressed = (short) (keysPressed | FightPacketDictionary.CROUCH);
+		if (keyboard.left)
+			keysPressed = (short) (keysPressed | FightPacketDictionary.LEFT);
+		if (keyboard.right)
+			keysPressed = (short) (keysPressed | FightPacketDictionary.RIGHT);
+		if (keyboard.block)
+			keysPressed = (short) (keysPressed | FightPacketDictionary.BLOCK);
+		if (keyboard.punch)
+			keysPressed = (short) (keysPressed | FightPacketDictionary.PUNCH);
+		if (keyboard.kick)
+			keysPressed = (short) (keysPressed | FightPacketDictionary.KICK);
+		
+		// set the client fight packet and send it
+		sendingPacket.keyboardInput = keysPressed;
+		game.connectionManager.sendFightPacket(sendingPacket);
+		
+		// updates the players if a packet has been received
+		if (game.connectionManager.mostRecentPacket instanceof ServerFightPacket)
+		{
+			packet = (ServerFightPacket) game.connectionManager.mostRecentPacket;
+			player1.setX(packet.p1x);
+			player1.setY(packet.p1y);
+			player2.setX(packet.p2x);
+			player2.setY(packet.p2y);
+		}
+		
 	}
 
 	@Override
 	public void render(Bitmap map)
 	{
 		map.drawSprite(fightBackground, 0, 0);
-		map.drawSprite(player1, player1.getX(), 243);
+		map.drawSprite(player1, player1.getX(), player1.getY());
+		map.drawSprite(player2, player2.getX(), player2.getY());
+		
 	}
 
 }

@@ -3,6 +3,7 @@ package com.pj.streetfighter.client.network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.StatePacket;
 
 public class ConnectionManager extends Listener implements Runnable 
@@ -31,6 +32,11 @@ public class ConnectionManager extends Listener implements Runnable
 		{
 			mostRecentPacket = p;
 		}
+	}
+	
+	public void sendFightPacket(ClientFightPacket p)
+	{
+		client.sendUDP(p);
 	}
 
 	@Override
