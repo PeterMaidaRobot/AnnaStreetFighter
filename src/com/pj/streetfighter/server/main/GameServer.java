@@ -34,7 +34,7 @@ public class GameServer extends Listener
 		server.start();
 		
 		long lastTime = System.nanoTime();
-		final double ns = 1000000000.0 / 1.0;
+		final double ns = 1000000000.0 / 60.0;
 		double delta = 0;
 		
 		while (true)
@@ -43,7 +43,7 @@ public class GameServer extends Listener
 			delta += (currTime - lastTime) / ns;
 			lastTime = currTime;
 			
-			// updates capped at 30 times per second
+			// updates capped at 60 times per second
 			while (delta >= 1)
 			{
 				update();
@@ -118,11 +118,11 @@ public class GameServer extends Listener
 			short input = ((ClientFightPacket) p1.mostRecent).keyboardInput;
 			if ((input & FightPacketDictionary.LEFT) != 0)
 			{
-				p1.x -= 8;
+				p1.x--;
 			} 
 			if ((input & FightPacketDictionary.RIGHT) != 0)
 			{
-				p1.x += 8;
+				p1.x++;
 			}
 		}
 		if (p2Packet instanceof ClientFightPacket)
@@ -130,11 +130,11 @@ public class GameServer extends Listener
 			short input = ((ClientFightPacket) p2.mostRecent).keyboardInput;
 			if ((input & FightPacketDictionary.LEFT) != 0)
 			{
-				p2.x -= 8;
+				p2.x--;
 			} 
 			if ((input & FightPacketDictionary.RIGHT) != 0)
 			{
-				p2.x += 8;
+				p2.x++;
 			}
 		}
 		
