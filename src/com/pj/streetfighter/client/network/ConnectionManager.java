@@ -70,6 +70,6 @@ public class ConnectionManager extends Listener implements Runnable
 	
 	public boolean isGamePacket(Object p)
 	{
-		return p instanceof StatePacket;
+		return p instanceof StatePacket || p instanceof ServerFightPacket;
 	}
 }
