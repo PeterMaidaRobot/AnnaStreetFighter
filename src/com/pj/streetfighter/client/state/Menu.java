@@ -13,7 +13,7 @@ import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.main.Game;
 import com.pj.streetfighter.client.network.ConnectionStatus;
-import com.pj.streetfighter.server.packet.StatePacket;
+import com.pj.streetfighter.network.StatePacket;
 
 public class Menu extends GameState
 {

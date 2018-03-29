@@ -1,4 +1,4 @@
-package com.pj.streetfighter.server.packet;
+package com.pj.streetfighter.network;
 
 public class StatePacket
 {

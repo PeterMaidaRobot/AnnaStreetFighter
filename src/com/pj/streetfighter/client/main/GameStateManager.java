@@ -8,7 +8,7 @@ import com.pj.streetfighter.client.state.Fight;
 import com.pj.streetfighter.client.state.GameState;
 import com.pj.streetfighter.client.state.Menu;
 import com.pj.streetfighter.client.state.Selection;
-import com.pj.streetfighter.server.packet.StatePacket;
+import com.pj.streetfighter.network.StatePacket;
 
 public class GameStateManager
 {

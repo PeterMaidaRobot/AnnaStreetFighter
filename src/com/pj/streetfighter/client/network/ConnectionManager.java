@@ -3,7 +3,7 @@ package com.pj.streetfighter.client.network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.pj.streetfighter.server.packet.StatePacket;
+import com.pj.streetfighter.network.StatePacket;
 
 public class ConnectionManager extends Listener implements Runnable 
 {

@@ -5,9 +5,9 @@ import java.io.IOException;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-
+import com.pj.streetfighter.network.ServerFightPacket;
+import com.pj.streetfighter.network.StatePacket;
 import com.pj.streetfighter.server.entity.Player;
-import com.pj.streetfighter.server.packet.StatePacket;
 import com.pj.streetfighter.server.state.ServerState;
 
 public class GameServer extends Listener
@@ -119,9 +119,9 @@ public class GameServer extends Listener
 		if (p1.c != null && p2.c != null)
 		{
 			StatePacket goToSelection = new StatePacket();
-			goToSelection.state = StatePacket.SELECTION;
+			goToSelection.state = StatePacket.FIGHT;
 			server.sendToAllTCP(goToSelection);
-			status = ServerState.WAITING_IN_SELECTION;
+			status = ServerState.FIGHT;
 		}
 	}
 }
