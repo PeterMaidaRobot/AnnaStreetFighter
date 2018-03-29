@@ -17,8 +17,8 @@ public class GameServer extends Listener
 	private static final int UDP_PORT = 60002;
 	
 	private static ServerState status = ServerState.WAITING_FOR_CONNECTION;
-	private static Player p1 = null;
-	private static Player p2 = null;
+	private static Player p1 = new Player(null);
+	private static Player p2 = new Player(null);
 	
 	public static void main (String[] args) throws IOException
 	{
@@ -50,26 +50,29 @@ public class GameServer extends Listener
 
 	public void connected(Connection c)
 	{
-		System.out.println("received connection");
-		if (p1 == null)
+		if (p1.c == null)
 		{
-			p1 = new Player(c);
+			p1.c = c;
+			System.out.println("set player 1");
 		}
-		else if (p2 == null)
+		else if (p2.c == null)
 		{
-			p2 = new Player(c);
+			p2.c = c;
+			System.out.println("set player 2");
 		}
+		
 	}
 	
 	public void disconnected(Connection c)
 	{
-		if (p1 != null && p1.c.equals(c))
+		System.out.println("disconnecting...");
+		if (p1.c != null && p1.c.equals(c))
 		{
-			p1 = null;
+			p1.c = null;
 		}
-		else if (p2 != null && p2.c.equals(c))
+		else if (p2.c != null && p2.c.equals(c))
 		{
-			p2 = null;
+			p2.c = null;
 		}
 		StatePacket goToMenu = new StatePacket();
 		goToMenu.state = StatePacket.MENU;
@@ -101,7 +104,8 @@ public class GameServer extends Listener
 		}
 	}
 	
-	private static void updateFight() {
+	private static void updateFight()
+	{
 		
 	}
 
@@ -112,7 +116,7 @@ public class GameServer extends Listener
 
 	private static void updateMenu()
 	{
-		if (p1 != null && p2 != null)
+		if (p1.c != null && p2.c != null)
 		{
 			StatePacket goToSelection = new StatePacket();
 			goToSelection.state = StatePacket.SELECTION;
