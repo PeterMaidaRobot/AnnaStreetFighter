@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.pj.streetfighter.network.ClientFightPacket;
+import com.pj.streetfighter.network.ServerFightPacket;
 import com.pj.streetfighter.network.StatePacket;
 
 public class ConnectionManager extends Listener implements Runnable 
@@ -22,6 +23,8 @@ public class ConnectionManager extends Listener implements Runnable
 	{
 		client  = new Client();
 		client.getKryo().register(StatePacket.class);
+		client.getKryo().register(ServerFightPacket.class);
+		client.getKryo().register(ClientFightPacket.class);
 		client.addListener(this);
 		client.start();
 	}
