@@ -19,8 +19,8 @@ public class GameServer extends Listener
 	private static final int UDP_PORT = 60002;
 	
 	private static ServerState status = ServerState.WAITING_FOR_CONNECTION;
-	private static Player p1 = new Player(null, 50, 150);
-	private static Player p2 = new Player(null, 550, 150);
+	private static Player p1 = new Player(null, 50, 243);
+	private static Player p2 = new Player(null, 550, 243);
 	
 	public static void main (String[] args) throws IOException
 	{
@@ -85,11 +85,11 @@ public class GameServer extends Listener
 	
 	public void received(Connection c, Object packet)
 	{
-		if (p1 != null && p1.c.equals(c))
+		if (p1.c != null && p1.c.equals(c))
 		{
 			p1.mostRecent = packet;
 		}
-		else if (p2 != null && p2.c.equals(c))
+		else if (p2.c != null && p2.c.equals(c))
 		{
 			p2.mostRecent = packet;
 		}
@@ -127,7 +127,7 @@ public class GameServer extends Listener
 		}
 		if (p2Packet instanceof ClientFightPacket)
 		{
-			short input = ((ClientFightPacket) p1.mostRecent).keyboardInput;
+			short input = ((ClientFightPacket) p2.mostRecent).keyboardInput;
 			if ((input & FightPacketDictionary.LEFT) != 0)
 			{
 				p2.x--;
