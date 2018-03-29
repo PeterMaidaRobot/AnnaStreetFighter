@@ -83,6 +83,7 @@ public class Menu extends GameState
 		{
 			// connect to server using string typed in text box
 			game.connectionManager.serverIP = address.getText();
+			game.connectionManager.status = ConnectionStatus.CONNECTING;
 			SwingUtilities.invokeLater(game.connectionManager);
 		}
 		
