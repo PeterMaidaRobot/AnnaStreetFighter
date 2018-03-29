@@ -15,8 +15,8 @@ public class Fight extends GameState{
 	Sprite fightBackground = new Sprite(640, 378, 0, 0, fightSheet);
 	
 	SpriteSheet player1Sheet = new SpriteSheet("/character_sprites/prometheus.png", 64);
-	Sprite player1 = new Sprite(64, 64, 0, 243, player1Sheet);
-	Sprite player2 = new Sprite(64, 64, 0, 243, player1Sheet);
+	Sprite player1 = new Sprite(64, 64, 0, 0, player1Sheet);
+	Sprite player2 = new Sprite(64, 64, 0, 0, player1Sheet);
 	
 	ServerFightPacket packet = null;
 	
@@ -39,9 +39,7 @@ public class Fight extends GameState{
 
 	@Override
 	public void update(Game game)
-	{
-		player1.setX(player1.getX() + 1);
-		
+	{	
 		// create the client fight packet from the keyboard presses
 		Keyboard keyboard = game.keyboard;
 		ClientFightPacket sendingPacket = new ClientFightPacket();
