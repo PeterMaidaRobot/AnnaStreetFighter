@@ -25,7 +25,7 @@ public class GameServer extends Listener
 	public static void main (String[] args) throws IOException
 	{
 		// create and start server
-		server = new Server();
+		server = new Server(); //free
 		server.getKryo().register(StatePacket.class);
 		server.getKryo().register(ServerFightPacket.class);
 		server.getKryo().register(ClientFightPacket.class);
