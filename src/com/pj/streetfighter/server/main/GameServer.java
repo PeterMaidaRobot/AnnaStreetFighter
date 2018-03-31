@@ -6,9 +6,10 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.pj.streetfighter.network.ClientFightPacket;
-import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.ServerFightPacket;
 import com.pj.streetfighter.network.StatePacket;
+import com.pj.streetfighter.server.engine.GameEngine;
+import com.pj.streetfighter.server.engine.Physics;
 import com.pj.streetfighter.server.entity.Player;
 import com.pj.streetfighter.server.state.ServerState;
 
@@ -19,13 +20,14 @@ public class GameServer extends Listener
 	private static final int UDP_PORT = 60002;
 	
 	private static ServerState status = ServerState.WAITING_FOR_CONNECTION;
-	private static Player p1 = new Player(null, 50, 243);
-	private static Player p2 = new Player(null, 550, 243);
+	private static Player p1 = new Player(null, 50, 243, new Physics());
+	private static Player p2 = new Player(null, 550, 243, new Physics());
+	private static GameEngine engine = new GameEngine(p1, p2);
 	
 	public static void main (String[] args) throws IOException
 	{
 		// create and start server
-		server = new Server(); //free
+		server = new Server();
 		server.getKryo().register(StatePacket.class);
 		server.getKryo().register(ServerFightPacket.class);
 		server.getKryo().register(ClientFightPacket.class);
@@ -101,42 +103,28 @@ public class GameServer extends Listener
 		{
 			case WAITING_FOR_CONNECTION:
 				updateMenu();
+				break;
 			case WAITING_IN_SELECTION:
 				updateSelection();
+				break;
 			case FIGHT:
 				updateFight();
+				break;
 		}
 	}
 	
 	private static void updateFight()
-	{
-		Object p1Packet = p1.mostRecent;
-		Object p2Packet = p2.mostRecent;
+	{	
+		if (p1.mostRecent instanceof ClientFightPacket)
+		{
+			engine.updatePlayer(p1);
+		}
+		if (p2.mostRecent instanceof ClientFightPacket)
+		{
+			engine.updatePlayer(p2);
+		}
 		
-		if (p1Packet instanceof ClientFightPacket)
-		{
-			short input = ((ClientFightPacket) p1.mostRecent).keyboardInput;
-			if ((input & FightPacketDictionary.LEFT) != 0)
-			{
-				p1.x--;
-			} 
-			if ((input & FightPacketDictionary.RIGHT) != 0)
-			{
-				p1.x++;
-			}
-		}
-		if (p2Packet instanceof ClientFightPacket)
-		{
-			short input = ((ClientFightPacket) p2.mostRecent).keyboardInput;
-			if ((input & FightPacketDictionary.LEFT) != 0)
-			{
-				p2.x--;
-			} 
-			if ((input & FightPacketDictionary.RIGHT) != 0)
-			{
-				p2.x++;
-			}
-		}
+		engine.updateEnvironment();
 		
 		ServerFightPacket packet = new ServerFightPacket();
 		packet.p1x = (short) p1.x;
