@@ -2,6 +2,7 @@ package com.pj.streetfighter.client.state;
 
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.main.Game;
+import com.pj.streetfighter.network.StatePacket;
 
 public class Selection extends GameState{
 
@@ -26,6 +27,11 @@ public class Selection extends GameState{
 	public void update(Game game) {
 		// TODO Auto-generated method stub
 		
+		Object packet = game.connectionManager.mostRecentPacket;
+		if (packet instanceof StatePacket)
+		{
+			game.manager.receiveUpdate(game, (StatePacket) packet);
+		}
 	}
 
 	@Override

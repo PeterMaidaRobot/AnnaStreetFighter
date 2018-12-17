@@ -141,7 +141,6 @@ public class GameServer extends Listener
 
 	private static void updateMenu()
 	{
-		
 		if (p1.c != null && p2.c != null)
 		{
 			StatePacket goToSelection = new StatePacket();
