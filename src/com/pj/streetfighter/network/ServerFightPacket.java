@@ -2,8 +2,9 @@ package com.pj.streetfighter.network;
 
 public class ServerFightPacket
 {	
-	public byte P1statusP2status;
-	public byte gameStatus;	
+	public byte p1Sprite;
+	public byte p2Sprite;
+	public byte gameStatus;
 	public short p1x;
 	public short p1y;
 	public short p2x;

@@ -5,11 +5,10 @@ import java.io.IOException;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import com.pj.streetfighter.network.ClientFightPacket;
-import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.ServerFightPacket;
 import com.pj.streetfighter.network.StatePacket;
-import com.pj.streetfighter.server.entity.Player;
+import com.pj.streetfighter.server.engine.FightEngine;
+import com.pj.streetfighter.server.entity.PlayerConnection;
 import com.pj.streetfighter.server.state.ServerState;
 
 public class GameServer extends Listener
@@ -19,8 +18,11 @@ public class GameServer extends Listener
 	private static final int UDP_PORT = 60002;
 	
 	private static ServerState status = ServerState.WAITING_FOR_CONNECTION;
-	private static Player p1 = new Player(null, 50, 243);
-	private static Player p2 = new Player(null, 550, 243);
+	private static PlayerConnection p1 = new PlayerConnection(null);
+	private static PlayerConnection p2 = new PlayerConnection(null);
+	// 50, 243		550, 243
+	
+	private static FightEngine engine = null;
 	
 	public static void main (String[] args) throws IOException
 	{
@@ -28,7 +30,6 @@ public class GameServer extends Listener
 		server = new Server();
 		server.getKryo().register(StatePacket.class);
 		server.getKryo().register(ServerFightPacket.class);
-		server.getKryo().register(ClientFightPacket.class);
 		server.bind(TCP_PORT, UDP_PORT);
 		server.addListener(new GameServer());
 		server.start();
@@ -96,15 +97,18 @@ public class GameServer extends Listener
 	}
 	
 	private static void update()
-	{		
+	{
 		switch (status)
 		{
 			case WAITING_FOR_CONNECTION:
 				updateMenu();
+				break;
 			case WAITING_IN_SELECTION:
 				updateSelection();
+				break;
 			case FIGHT:
 				updateFight();
+				break;
 		}
 	}
 	
@@ -113,39 +117,7 @@ public class GameServer extends Listener
 		Object p1Packet = p1.mostRecent;
 		Object p2Packet = p2.mostRecent;
 		
-		if (p1Packet instanceof ClientFightPacket)
-		{
-			short input = ((ClientFightPacket) p1.mostRecent).keyboardInput;
-			if ((input & FightPacketDictionary.LEFT) != 0)
-			{
-				p1.x--;
-			} 
-			if ((input & FightPacketDictionary.RIGHT) != 0)
-			{
-				p1.x++;
-			}
-		}
-		if (p2Packet instanceof ClientFightPacket)
-		{
-			short input = ((ClientFightPacket) p2.mostRecent).keyboardInput;
-			if ((input & FightPacketDictionary.LEFT) != 0)
-			{
-				p2.x--;
-			} 
-			if ((input & FightPacketDictionary.RIGHT) != 0)
-			{
-				p2.x++;
-			}
-		}
-		
-		ServerFightPacket packet = new ServerFightPacket();
-		packet.p1x = (short) p1.x;
-		packet.p1y = (short) p1.y;
-		packet.p2x = (short) p2.x;
-		packet.p2y = (short) p2.y;
-		packet.gameStatus = (byte) 1;
-		packet.p1p2health = (byte) 1;
-		packet.P1statusP2status = (short) 1;
+		ServerFightPacket packet = engine.updateFight(p1Packet, p2Packet);
 		server.sendToAllTCP(packet);
 	}
 
@@ -156,6 +128,7 @@ public class GameServer extends Listener
 
 	private static void updateMenu()
 	{
+		
 		if (p1.c != null && p2.c != null)
 		{
 			StatePacket goToSelection = new StatePacket();
