@@ -8,11 +8,12 @@ import com.pj.streetfighter.client.main.Game;
 import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.ServerFightPacket;
+import com.pj.streetfighter.server.engine.Meadow;
+import com.pj.streetfighter.server.engine.Stage;
 
 public class Fight extends GameState{
 
-	SpriteSheet fightSheet = new SpriteSheet("/character_sprites/fightsheet.png", 640);
-	Sprite fightBackground = new Sprite(640, 378, 0, 0, fightSheet);
+	Stage stage = new Meadow();
 	
 	SpriteSheet player1Sheet = new SpriteSheet("/character_sprites/prometheus.png", 64);
 	Sprite player1 = new Sprite(64, 64, 0, 0, player1Sheet);
@@ -78,7 +79,7 @@ public class Fight extends GameState{
 	@Override
 	public void render(Bitmap map)
 	{
-		map.drawSprite(fightBackground, 0, 0);
+		map.drawSprite(stage.getBackground(), 0, 0);
 		map.drawSprite(player1, player1.getX(), player1.getY());
 		map.drawSprite(player2, player2.getX(), player2.getY());
 		

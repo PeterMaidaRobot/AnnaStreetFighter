@@ -22,7 +22,6 @@ public class GameServer extends Listener
 	private static ServerState status = ServerState.WAITING_FOR_CONNECTION;
 	private static PlayerConnection p1 = new PlayerConnection(null);
 	private static PlayerConnection p2 = new PlayerConnection(null);
-	// 50, 243		550, 243
 	
 	private static FightEngine engine = null;
 	

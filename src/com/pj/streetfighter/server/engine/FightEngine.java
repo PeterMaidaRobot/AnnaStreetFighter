@@ -17,6 +17,16 @@ public class FightEngine
 	
 	public ServerFightPacket updateFight(Object p1Packet, Object p2Packet)
 	{
+		// check if both players are touching bounding box on bottom (list of bounding boxes)
+		// move them down to a bounding box (don't jump past it)
+		// move them left/right *LEFT RIGHT MOVEMENT COULD STILL BE BOUNDING BOX!*
+		
+		
+		
+		// if it will be in the box, move it until it is touching the edge
+		
+		
+		
 		if (p1Packet instanceof ClientFightPacket)
 		{
 			short input = ((ClientFightPacket) p1Packet).keyboardInput;
@@ -29,6 +39,7 @@ public class FightEngine
 				p1.incrementX(1);
 			}
 		}
+		
 		if (p2Packet instanceof ClientFightPacket)
 		{
 			short input = ((ClientFightPacket) p2Packet).keyboardInput;
