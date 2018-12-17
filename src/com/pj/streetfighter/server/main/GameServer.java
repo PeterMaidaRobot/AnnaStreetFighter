@@ -5,7 +5,9 @@ import java.io.IOException;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.ServerFightPacket;
+import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.StatePacket;
 import com.pj.streetfighter.server.engine.FightEngine;
 import com.pj.streetfighter.server.entity.PlayerConnection;
@@ -30,6 +32,7 @@ public class GameServer extends Listener
 		server = new Server();
 		server.getKryo().register(StatePacket.class);
 		server.getKryo().register(ServerFightPacket.class);
+		server.getKryo().register(ClientFightPacket.class);
 		server.bind(TCP_PORT, UDP_PORT);
 		server.addListener(new GameServer());
 		server.start();
@@ -135,6 +138,7 @@ public class GameServer extends Listener
 			goToSelection.state = StatePacket.FIGHT;
 			server.sendToAllTCP(goToSelection);
 			status = ServerState.FIGHT;
+			engine = new FightEngine();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
