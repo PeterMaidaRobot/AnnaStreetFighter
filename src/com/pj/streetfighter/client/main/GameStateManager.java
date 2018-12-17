@@ -53,9 +53,6 @@ public class GameStateManager
 			if (p.state == StatePacket.SELECTION)
 			{
 				this.push(game, new Selection(game.WIDTH, game.HEIGHT));
-			} else if (p.state == StatePacket.FIGHT)
-			{
-				this.push(game, new Fight(game.WIDTH, game.HEIGHT));
 			}
 		}
 		else if (stack.peek() instanceof Selection)
