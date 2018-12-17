@@ -7,7 +7,6 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.ServerFightPacket;
-import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.StatePacket;
 import com.pj.streetfighter.server.engine.FightEngine;
 import com.pj.streetfighter.server.entity.PlayerConnection;
@@ -125,7 +124,19 @@ public class GameServer extends Listener
 
 	private static void updateSelection()
 	{
-		
+		if (p1.c != null && p2.c != null)
+		{
+			StatePacket goToFight = new StatePacket();
+			goToFight.state = StatePacket.FIGHT;
+			server.sendToAllTCP(goToFight);
+			status = ServerState.FIGHT;
+			engine = new FightEngine();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private static void updateMenu()
@@ -134,10 +145,9 @@ public class GameServer extends Listener
 		if (p1.c != null && p2.c != null)
 		{
 			StatePacket goToSelection = new StatePacket();
-			goToSelection.state = StatePacket.FIGHT;
+			goToSelection.state = StatePacket.SELECTION;
 			server.sendToAllTCP(goToSelection);
-			status = ServerState.FIGHT;
-			engine = new FightEngine();
+			status = ServerState.WAITING_IN_SELECTION;
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
