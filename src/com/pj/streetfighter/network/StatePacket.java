@@ -7,4 +7,9 @@ public class StatePacket
 	public static final byte MENU = 3;
 	
 	public byte state;
+	
+	public StatePacket(byte state)
+	{
+		this.state = state;
+	}
 }

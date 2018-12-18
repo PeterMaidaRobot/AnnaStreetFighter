@@ -9,6 +9,7 @@ import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.ServerFightPacket;
 import com.pj.streetfighter.network.StatePacket;
 import com.pj.streetfighter.server.engine.FightEngine;
+import com.pj.streetfighter.server.engine.Meadow;
 import com.pj.streetfighter.server.entity.PlayerConnection;
 import com.pj.streetfighter.server.state.ServerState;
 
@@ -39,6 +40,7 @@ public class GameServer extends Listener
 		final double ns = 1000000000.0 / 60.0;
 		double delta = 0;
 		
+		// main server loop
 		while (true)
 		{
 			long currTime = System.nanoTime();
@@ -54,6 +56,24 @@ public class GameServer extends Listener
 		}
 	}
 
+	// --------------------------------------------------------------------- //
+	
+	private static void idle()
+	{
+		try
+		{
+			Thread.sleep(500);
+		} 
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	// ===================================================================== //
+	//					       CONNECTION METHODS						   //
+	// ===================================================================== //
+	
 	public void connected(Connection c)
 	{
 		if (p1.c == null)
@@ -66,8 +86,9 @@ public class GameServer extends Listener
 			p2.c = c;
 			System.out.println("set player 2");
 		}
-		
 	}
+	
+	// --------------------------------------------------------------------- //
 	
 	public void disconnected(Connection c)
 	{
@@ -80,10 +101,12 @@ public class GameServer extends Listener
 		{
 			p2.c = null;
 		}
-		StatePacket goToMenu = new StatePacket();
-		goToMenu.state = StatePacket.MENU;
+		
+		StatePacket goToMenu = new StatePacket(StatePacket.MENU);
 		server.sendToAllTCP(goToMenu);
 	}
+	
+	// --------------------------------------------------------------------- //
 	
 	public void received(Connection c, Object packet)
 	{
@@ -97,6 +120,17 @@ public class GameServer extends Listener
 		}
 	}
 	
+	// --------------------------------------------------------------------- //
+	
+	private static boolean playersConnected()
+	{
+		return p1.c != null && p2.c != null;
+	}
+	
+	// ===================================================================== //
+	//					          UPDATE METHODS			 				   //
+	// ===================================================================== //
+		
 	private static void update()
 	{
 		switch (status)
@@ -113,6 +147,39 @@ public class GameServer extends Listener
 		}
 	}
 	
+	// --------------------------------------------------------------------- //
+
+	private static void updateMenu()
+	{
+		if (playersConnected())
+		{
+			status = ServerState.WAITING_IN_SELECTION;
+			
+			StatePacket goToSelection = new StatePacket(StatePacket.SELECTION);
+			server.sendToAllTCP(goToSelection);
+			
+			idle();
+		}
+	}
+	
+	// --------------------------------------------------------------------- //
+	
+	private static void updateSelection()
+	{
+		if (playersConnected())
+		{
+			status = ServerState.FIGHT;
+			engine = new FightEngine(new Meadow());
+			
+			StatePacket goToFight = new StatePacket(StatePacket.FIGHT);
+			server.sendToAllTCP(goToFight);
+			
+			idle();
+		}
+	}
+	
+	// --------------------------------------------------------------------- //
+	
 	private static void updateFight()
 	{
 		Object p1Packet = p1.mostRecent;
@@ -120,38 +187,5 @@ public class GameServer extends Listener
 		
 		ServerFightPacket packet = engine.updateFight(p1Packet, p2Packet);
 		server.sendToAllTCP(packet);
-	}
-
-	private static void updateSelection()
-	{
-		if (p1.c != null && p2.c != null)
-		{
-			StatePacket goToFight = new StatePacket();
-			goToFight.state = StatePacket.FIGHT;
-			server.sendToAllTCP(goToFight);
-			status = ServerState.FIGHT;
-			engine = new FightEngine();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private static void updateMenu()
-	{
-		if (p1.c != null && p2.c != null)
-		{
-			StatePacket goToSelection = new StatePacket();
-			goToSelection.state = StatePacket.SELECTION;
-			server.sendToAllTCP(goToSelection);
-			status = ServerState.WAITING_IN_SELECTION;
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }

@@ -116,8 +116,7 @@ public class Game extends Canvas implements Runnable
 				timer += 1000;
 				frame.setTitle("Anna's Street Fighter" + "  |  " + updates + " ups, "+ frames + " fps");
 				updates = 0;
-				frames = 0;
-				
+				frames = 0;	
 			}
 		}
 		this.stop();
@@ -141,6 +140,7 @@ public class Game extends Canvas implements Runnable
 			pixels[i] = bitmap.pixels[i];
 		}
 
+		// cover screen with black and draw new image
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);

@@ -8,11 +8,13 @@ public class FightEngine
 {
 	private Player p1;
 	private Player p2;
+	private Stage stage;
 	
-	public FightEngine()
+	public FightEngine(Stage stage)
 	{
 		p1 = new Player(50, 243);
 		p2 = new Player(550, 243);
+		this.stage = stage;
 	}
 	
 	public ServerFightPacket updateFight(Object p1Packet, Object p2Packet)
