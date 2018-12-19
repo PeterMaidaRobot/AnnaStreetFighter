@@ -1,7 +1,8 @@
-package com.pj.streetfighter.server.engine;
+package com.pj.streetfigher.stages;
 
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
+import com.pj.streetfighter.server.engine.BoundingBox;
 
 public class Meadow extends Stage {
 	

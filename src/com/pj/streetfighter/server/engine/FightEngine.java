@@ -1,5 +1,7 @@
 package com.pj.streetfighter.server.engine;
 
+import com.pj.streetfigher.stages.Stage;
+import com.pj.streetfighter.characters.Prometheus;
 import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.ServerFightPacket;
@@ -12,8 +14,8 @@ public class FightEngine
 	
 	public FightEngine(Stage stage)
 	{
-		p1 = new Player(50, 243);
-		p2 = new Player(550, 243);
+		p1 = new Player(new Prometheus(), 50, 243);
+		p2 = new Player(new Prometheus(), 550, 243);
 		this.stage = stage;
 	}
 	

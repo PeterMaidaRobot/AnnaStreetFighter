@@ -1,4 +1,4 @@
-package com.pj.streetfighter.server.engine;
+package com.pj.streetfigher.stages;
 
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.server.engine.BoundingBox;
@@ -14,11 +14,13 @@ public abstract class Stage {
 		this.platforms = platforms;
 	}
 
-	public Sprite getBackground() {
+	public Sprite getBackground()
+	{
 		return background;
 	}
 
-	public BoundingBox[] getPlatforms() {
+	public BoundingBox[] getPlatforms()
+	{
 		return platforms;
 	}
 }
