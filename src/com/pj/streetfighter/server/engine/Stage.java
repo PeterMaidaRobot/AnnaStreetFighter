@@ -7,18 +7,27 @@ public abstract class Stage {
 	
 	private final Sprite background;
 	private final BoundingBox[] platforms;
+	private final double gravity;
 
-	public Stage(Sprite background, BoundingBox[] platforms)
+	public Stage(Sprite background, BoundingBox[] platforms, double gravity)
 	{
 		this.background = background;
 		this.platforms = platforms;
+		this.gravity = gravity;
 	}
 
-	public Sprite getBackground() {
+	public Sprite getBackground()
+	{
 		return background;
 	}
 
-	public BoundingBox[] getPlatforms() {
+	public BoundingBox[] getPlatforms()
+	{
 		return platforms;
+	}
+	
+	public double getGravity()
+	{
+		return gravity;
 	}
 }

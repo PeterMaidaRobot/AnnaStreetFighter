@@ -1,5 +1,7 @@
 package com.pj.streetfighter.server.engine;
 
+import java.util.ArrayList;
+
 import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.ServerFightPacket;
@@ -19,6 +21,27 @@ public class FightEngine
 	
 	public ServerFightPacket updateFight(Object p1Packet, Object p2Packet)
 	{
+		boolean p1IsFight = p1Packet instanceof ClientFightPacket;
+		boolean p2IsFight = p2Packet instanceof ClientFightPacket;
+		short p1Input = 0, p2Input = 0;
+		if (p1IsFight)
+		{
+			p1Input = ((ClientFightPacket) p1Packet).keyboardInput;
+		}
+		if (p2IsFight)
+		{
+			p2Input = ((ClientFightPacket) p2Packet).keyboardInput;
+		}
+		
+		// check collisions against platforms
+		ArrayList<BoundingBox> p1CollidedPlatforms = getCollisions(p1, stage.getPlatforms());
+		
+		
+		// get input
+		
+		// perform input based on collisions
+		
+		
 		// check if both players are touching bounding box on bottom (list of bounding boxes)
 		// move them down to a bounding box (don't jump past it)
 		// move them left/right *LEFT RIGHT MOVEMENT COULD STILL BE BOUNDING BOX!*
@@ -66,5 +89,14 @@ public class FightEngine
 		packet.p2Sprite = (byte) 1;
 
 		return packet;
+	}
+
+	private ArrayList<BoundingBox> getCollisions(Player p12, BoundingBox[] boxes)
+	{
+		ArrayList<BoundingBox> collisions = new ArrayList<BoundingBox>();
+		
+		
+		
+		return collisions;
 	}
 }
