@@ -68,12 +68,16 @@ public class Player
 	
 	public BoundingBox[] getBoundingBoxes()
 	{
-		BoundingBox[] boundingBoxes = character.getAnimation(animationIndex).getBoundingBoxes().clone();
+		BoundingBox[] originalBoxes = character.getAnimation(animationIndex).getBoundingBoxes();
+		BoundingBox[] boundingBoxes = new BoundingBox[originalBoxes.length];
+	
 		for (int i = 0; i < boundingBoxes.length; i++)
 		{
+			boundingBoxes[i] = new BoundingBox(originalBoxes[i]);
 			boundingBoxes[i].addXOffset(x);
 			boundingBoxes[i].addYOffset(y);
 		}
+		System.out.println(boundingBoxes[0].getTop() + ", " + boundingBoxes[0].getLeft());
 		return boundingBoxes;
 	}
 }

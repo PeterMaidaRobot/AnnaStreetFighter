@@ -16,6 +16,8 @@ public class FightEngine
 	private Player p2;
 	private Stage stage;
 	
+	private boolean flag = false;
+	
 	public FightEngine(Stage stage)
 	{
 		p1 = new Player(new Prometheus(), 50, 243);
@@ -125,6 +127,7 @@ public class FightEngine
 			{
 				if (pBoundingBoxes[i].hasCollided(boundingBoxes[j])) 
 				{
+					System.out.println("collision occurred");
 					if (!collisions.containsKey(boundingBoxes[j]))
 					{
 						collisions.put(boundingBoxes[j], new ArrayList<BoundingBox>());

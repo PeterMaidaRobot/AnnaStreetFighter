@@ -12,6 +12,14 @@ public class BoundingBox {
 		this.y2 = y2;
 	}
 	
+	public BoundingBox(BoundingBox boundingBox)
+	{
+		this.y1 = boundingBox.getTop();
+		this.y2 = boundingBox.getBottom();			
+		this.x1 = boundingBox.getLeft();
+		this.x2 = boundingBox.getRight();
+	}
+
 	public int getTop()
 	{
 		return y1;

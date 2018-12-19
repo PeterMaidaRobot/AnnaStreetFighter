@@ -73,6 +73,8 @@ public class Fight extends GameState{
 			player1.setY(packet.p1y);
 			player2.setX(packet.p2x);
 			player2.setY(packet.p2y);
+			System.out.println("P1 x: " + packet.p1x + " y: " + packet.p1y);
+			System.out.println("P2 x: " + packet.p2x + " y: " + packet.p2y);
 			p1Sprite = packet.p1Sprite;
 			p2Sprite = packet.p2Sprite;
 		}

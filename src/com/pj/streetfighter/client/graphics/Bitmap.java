@@ -52,7 +52,7 @@ public class Bitmap
 			for(int xx = x; xx < x + sprite.getXSIZE(); xx++)
 			{
 				// do not store an off screen pixel
-				if (yy < 0 || yy > height || xx < 0 || xx > width)
+				if (yy < 0 || yy >= height || xx < 0 || xx >= width)
 				{
 					continue;
 				}
@@ -63,6 +63,7 @@ public class Bitmap
 				}
 				
 				pixels[xx + yy * width] = sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] | overlay;
+				
 			}
 		}
 	}
