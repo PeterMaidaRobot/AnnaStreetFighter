@@ -8,6 +8,8 @@ public class StatePacket
 	
 	public byte state;
 	
+	public StatePacket() {}
+	
 	public StatePacket(byte state)
 	{
 		this.state = state;
