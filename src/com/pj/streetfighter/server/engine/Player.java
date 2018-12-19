@@ -1,32 +1,46 @@
 package com.pj.streetfighter.server.engine;
 
+import com.pj.streetfighter.characters.Character;
+
 public class Player
 {
+	private Character character;
 	private int x, y;
 
-	public Player(int x, int y)
+	public Player(Character p1Character, int x, int y)
 	{
+		this.character = p1Character;
 		this.x = x;
 		this.y = y;
 	}
 	
-	public int getX() {
+	public Character getCharacter()
+	{
+		return character;
+	}
+	
+	public int getX()
+	{
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(int x)
+	{
 		this.x = x;
 	}
 
-	public int getY() {
+	public int getY()
+	{
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(int y)
+	{
 		this.y = y;
 	}
 
-	public void incrementX(int i) {
+	public void incrementX(int i)
+	{
 		this.x += i;
 	}
 }

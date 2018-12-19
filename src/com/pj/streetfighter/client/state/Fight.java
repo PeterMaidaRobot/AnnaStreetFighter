@@ -1,5 +1,7 @@
 package com.pj.streetfighter.client.state;
 
+import com.pj.streetfigher.stages.Meadow;
+import com.pj.streetfigher.stages.Stage;
 import com.pj.streetfighter.client.graphics.Bitmap;
 import com.pj.streetfighter.client.graphics.Sprite;
 import com.pj.streetfighter.client.graphics.SpriteSheet;
@@ -8,8 +10,6 @@ import com.pj.streetfighter.client.main.Game;
 import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.ServerFightPacket;
-import com.pj.streetfighter.server.engine.Meadow;
-import com.pj.streetfighter.server.engine.Stage;
 
 public class Fight extends GameState{
 

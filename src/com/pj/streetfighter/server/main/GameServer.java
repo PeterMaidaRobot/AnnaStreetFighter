@@ -5,11 +5,11 @@ import java.io.IOException;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import com.pj.streetfigher.stages.Meadow;
 import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.ServerFightPacket;
 import com.pj.streetfighter.network.StatePacket;
 import com.pj.streetfighter.server.engine.FightEngine;
-import com.pj.streetfighter.server.engine.Meadow;
 import com.pj.streetfighter.server.entity.PlayerConnection;
 import com.pj.streetfighter.server.state.ServerState;
 
