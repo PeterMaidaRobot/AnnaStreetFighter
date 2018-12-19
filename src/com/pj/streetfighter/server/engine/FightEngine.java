@@ -2,6 +2,7 @@ package com.pj.streetfighter.server.engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import com.pj.streetfigher.stages.Stage;
 import com.pj.streetfighter.characters.Prometheus;
@@ -24,6 +25,7 @@ public class FightEngine
 	
 	public ServerFightPacket updateFight(Object p1Packet, Object p2Packet)
 	{
+		// get input
 		boolean p1IsFightPacket = p1Packet instanceof ClientFightPacket;
 		boolean p2IsFightPacket = p2Packet instanceof ClientFightPacket;
 		short p1Input = 0, p2Input = 0;
@@ -43,33 +45,20 @@ public class FightEngine
 		Collision p1Collision = new Collision();
 		Collision p2Collision = new Collision();
 		
-		for (int i = 0; i < p1PlatformCollisions.size(); i++)
-		{
-			
-		}
+		p1Collision.setCollisions(p1PlatformCollisions);
+		p2Collision.setCollisions(p2PlatformCollisions);
 		
-		// get input
+		snapToEdge(p1, p1Collision);
+		snapToEdge(p2, p2Collision);
 		
 		// perform input based on collisions
-		
-		
-		// check if both players are touching bounding box on bottom (list of bounding boxes)
-		// move them down to a bounding box (don't jump past it)
-		// move them left/right *LEFT RIGHT MOVEMENT COULD STILL BE BOUNDING BOX!*
-		
-		
-		
-		// if it will be in the box, move it until it is touching the edge
-		
-		
-		
 		if (p1IsFightPacket)
 		{
-			if ((p1Input & FightPacketDictionary.LEFT) != 0)
+			if ((p1Input & FightPacketDictionary.LEFT) != 0 && !p1Collision.left)
 			{
 				p1.incrementX(-1);
 			} 
-			if ((p1Input & FightPacketDictionary.RIGHT) != 0)
+			if ((p1Input & FightPacketDictionary.RIGHT) != 0 && !p1Collision.right)
 			{
 				p1.incrementX(1);
 			}
@@ -77,11 +66,11 @@ public class FightEngine
 		
 		if (p2IsFightPacket)
 		{
-			if ((p2Input & FightPacketDictionary.LEFT) != 0)
+			if ((p2Input & FightPacketDictionary.LEFT) != 0 && !p2Collision.left)
 			{
 				p2.incrementX(-1);
 			} 
-			if ((p2Input & FightPacketDictionary.RIGHT) != 0)
+			if ((p2Input & FightPacketDictionary.RIGHT) != 0 && !p2Collision.right)
 			{
 				p2.incrementX(1);
 			}
@@ -98,6 +87,31 @@ public class FightEngine
 		packet.p2Sprite = (byte) 0;
 
 		return packet;
+	}
+
+	private void snapToEdge(Player p, Collision pCollision)
+	{
+		if (!pCollision.anyCollisions())
+		{
+			return;
+		}
+		
+		if (pCollision.up)
+		{
+			p.setY(p.getY() + pCollision.farthestUp);
+		}
+		if (pCollision.down)
+		{
+			p.setY(p.getY() - pCollision.farthestDown);
+		}
+		if (pCollision.left)
+		{
+			p.setX(p.getX() + pCollision.farthestLeft);
+		}
+		if (pCollision.right)
+		{
+			p.setX(p.getX() - pCollision.farthestRight);
+		}
 	}
 
 	private HashMap<BoundingBox, ArrayList<BoundingBox>> getPlayerCollisions(Player p, BoundingBox[] boundingBoxes)

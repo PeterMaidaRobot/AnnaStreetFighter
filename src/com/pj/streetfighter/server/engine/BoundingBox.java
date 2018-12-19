@@ -12,6 +12,26 @@ public class BoundingBox {
 		this.y2 = y2;
 	}
 	
+	public int getTop()
+	{
+		return y1;
+	}
+	
+	public int getBottom()
+	{
+		return y2;
+	}
+	
+	public int getLeft()
+	{
+		return x1;
+	}
+	
+	public int getRight() 
+	{
+		return x2;
+	}
+	
 	public boolean contains(int x, int y)
 	{
 		// check whether point passed is within bounds
