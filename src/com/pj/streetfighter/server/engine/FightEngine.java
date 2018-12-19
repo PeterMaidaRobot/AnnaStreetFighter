@@ -1,6 +1,8 @@
 package com.pj.streetfighter.server.engine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.pj.streetfigher.stages.Stage;
 import com.pj.streetfighter.characters.Prometheus;
 import com.pj.streetfighter.network.ClientFightPacket;
@@ -22,21 +24,29 @@ public class FightEngine
 	
 	public ServerFightPacket updateFight(Object p1Packet, Object p2Packet)
 	{
-		boolean p1IsFight = p1Packet instanceof ClientFightPacket;
-		boolean p2IsFight = p2Packet instanceof ClientFightPacket;
+		boolean p1IsFightPacket = p1Packet instanceof ClientFightPacket;
+		boolean p2IsFightPacket = p2Packet instanceof ClientFightPacket;
 		short p1Input = 0, p2Input = 0;
-		if (p1IsFight)
+		if (p1IsFightPacket)
 		{
 			p1Input = ((ClientFightPacket) p1Packet).keyboardInput;
 		}
-		if (p2IsFight)
+		if (p2IsFightPacket)
 		{
 			p2Input = ((ClientFightPacket) p2Packet).keyboardInput;
 		}
 		
 		// check collisions against platforms
-		ArrayList<BoundingBox> p1CollidedPlatforms = getCollisions(p1, stage.getPlatforms());
-		ArrayList<BoundingBox> p2CollidedPlatforms = getCollisions(p2, stage.getPlatforms());
+		HashMap<BoundingBox, ArrayList<BoundingBox>> p1PlatformCollisions = getPlayerCollisions(p1, stage.getPlatforms());
+		HashMap<BoundingBox, ArrayList<BoundingBox>> p2PlatformCollisions = getPlayerCollisions(p2, stage.getPlatforms());
+		
+		Collision p1Collision = new Collision();
+		Collision p2Collision = new Collision();
+		
+		for (int i = 0; i < p1PlatformCollisions.size(); i++)
+		{
+			
+		}
 		
 		// get input
 		
@@ -53,27 +63,25 @@ public class FightEngine
 		
 		
 		
-		if (p1Packet instanceof ClientFightPacket)
+		if (p1IsFightPacket)
 		{
-			short input = ((ClientFightPacket) p1Packet).keyboardInput;
-			if ((input & FightPacketDictionary.LEFT) != 0)
+			if ((p1Input & FightPacketDictionary.LEFT) != 0)
 			{
 				p1.incrementX(-1);
 			} 
-			if ((input & FightPacketDictionary.RIGHT) != 0)
+			if ((p1Input & FightPacketDictionary.RIGHT) != 0)
 			{
 				p1.incrementX(1);
 			}
 		}
 		
-		if (p2Packet instanceof ClientFightPacket)
+		if (p2IsFightPacket)
 		{
-			short input = ((ClientFightPacket) p2Packet).keyboardInput;
-			if ((input & FightPacketDictionary.LEFT) != 0)
+			if ((p2Input & FightPacketDictionary.LEFT) != 0)
 			{
 				p2.incrementX(-1);
 			} 
-			if ((input & FightPacketDictionary.RIGHT) != 0)
+			if ((p2Input & FightPacketDictionary.RIGHT) != 0)
 			{
 				p2.incrementX(1);
 			}
@@ -92,9 +100,26 @@ public class FightEngine
 		return packet;
 	}
 
-	private ArrayList<BoundingBox> getCollisions(Player p12, BoundingBox[] boxes)
+	private HashMap<BoundingBox, ArrayList<BoundingBox>> getPlayerCollisions(Player p, BoundingBox[] boundingBoxes)
 	{
-		ArrayList<BoundingBox> collisions = new ArrayList<BoundingBox>();	
+		HashMap<BoundingBox, ArrayList<BoundingBox>> collisions = new HashMap<BoundingBox, ArrayList<BoundingBox>>();	
+		BoundingBox[] pBoundingBoxes = p.getBoundingBoxes();
+		
+		for (int i = 0; i < pBoundingBoxes.length; i++)
+		{
+			for (int j = 0; j < boundingBoxes.length; j++)
+			{
+				if (pBoundingBoxes[i].hasCollided(boundingBoxes[j])) 
+				{
+					if (!collisions.containsKey(boundingBoxes[j]))
+					{
+						collisions.put(boundingBoxes[j], new ArrayList<BoundingBox>());
+					}
+					collisions.get(boundingBoxes[j]).add(pBoundingBoxes[i]);
+				}
+			}
+		}
+		
 		return collisions;
 	}
 }

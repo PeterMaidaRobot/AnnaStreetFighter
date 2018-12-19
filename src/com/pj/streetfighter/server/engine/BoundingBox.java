@@ -17,4 +17,21 @@ public class BoundingBox {
 		// check whether point passed is within bounds
 		return (x >= x1 && x <= x2 && y >= y1 && y <= y2);
 	}
+	
+	public boolean hasCollided(BoundingBox box)
+	{
+		return (box.contains(x1, y1) || box.contains(x1, y2) || box.contains(x2, y1) || box.contains(x2, y2));
+	}
+	
+	public void addXOffset(int x)
+	{
+		x1 += x;
+		x2 += x;
+	}
+	
+	public void addYOffset(int y)
+	{
+		y1 += y;
+		y2 += y;
+	}
 }
