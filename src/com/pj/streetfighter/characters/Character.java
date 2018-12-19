@@ -1,26 +1,18 @@
 package com.pj.streetfighter.characters;
 
-import com.pj.streetfighter.client.graphics.Sprite;
-import com.pj.streetfighter.server.engine.BoundingBox;
+import com.pj.streetfighter.characters.Animation;
 
 public abstract class Character {
 	
-	private final Sprite sprite;
-	private final BoundingBox[] boundingBoxes;
+	private final Animation[] animations;
 
-	public Character(Sprite sprite, BoundingBox[] boundingBoxes)
+	public Character(Animation[] animations)
 	{
-		this.sprite = sprite;
-		this.boundingBoxes = boundingBoxes;
+		this.animations = animations;
 	}
 
-	public Sprite getSprite()
+	public Animation getAnimation(int i)
 	{
-		return sprite;
-	}
-
-	public BoundingBox[] getBoundingBoxes()
-	{
-		return boundingBoxes;
+		return animations[i];
 	}
 }

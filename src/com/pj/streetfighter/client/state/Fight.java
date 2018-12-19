@@ -2,22 +2,23 @@ package com.pj.streetfighter.client.state;
 
 import com.pj.streetfigher.stages.Meadow;
 import com.pj.streetfigher.stages.Stage;
+import com.pj.streetfighter.characters.Prometheus;
 import com.pj.streetfighter.client.graphics.Bitmap;
-import com.pj.streetfighter.client.graphics.Sprite;
-import com.pj.streetfighter.client.graphics.SpriteSheet;
 import com.pj.streetfighter.client.input.Keyboard;
 import com.pj.streetfighter.client.main.Game;
 import com.pj.streetfighter.network.ClientFightPacket;
 import com.pj.streetfighter.network.FightPacketDictionary;
 import com.pj.streetfighter.network.ServerFightPacket;
+import com.pj.streetfighter.server.engine.Player;
 
 public class Fight extends GameState{
 
 	Stage stage = new Meadow();
 	
-	SpriteSheet player1Sheet = new SpriteSheet("/character_sprites/prometheus.png", 64);
-	Sprite player1 = new Sprite(64, 64, 0, 0, player1Sheet);
-	Sprite player2 = new Sprite(64, 64, 0, 0, player1Sheet);
+	Player player1 = new Player(new Prometheus(), 0, 0);
+	Player player2 = new Player(new Prometheus(), 0, 0);
+	int p1Sprite = 0;
+	int p2Sprite = 0;
 	
 	ServerFightPacket packet = null;
 	
@@ -72,6 +73,8 @@ public class Fight extends GameState{
 			player1.setY(packet.p1y);
 			player2.setX(packet.p2x);
 			player2.setY(packet.p2y);
+			p1Sprite = packet.p1Sprite;
+			p2Sprite = packet.p2Sprite;
 		}
 		
 	}
@@ -80,8 +83,16 @@ public class Fight extends GameState{
 	public void render(Bitmap map)
 	{
 		map.drawSprite(stage.getBackground(), 0, 0);
-		map.drawSprite(player1, player1.getX(), player1.getY());
-		map.drawSprite(player2, player2.getX(), player2.getY());
+		map.drawSprite(
+				player1.getCharacter().getAnimation(p1Sprite).getSprite(), 
+				player1.getX(), 
+				player1.getY()
+		);
+		map.drawSprite(
+				player2.getCharacter().getAnimation(p2Sprite).getSprite(), 
+				player2.getX(), 
+				player2.getY()
+		);
 		
 	}
 

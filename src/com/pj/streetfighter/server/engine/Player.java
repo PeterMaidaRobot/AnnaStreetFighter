@@ -5,6 +5,7 @@ import com.pj.streetfighter.characters.Character;
 public class Player
 {
 	private Character character;
+	private byte state;
 	private int x, y;
 
 	public Player(Character p1Character, int x, int y)
@@ -17,6 +18,16 @@ public class Player
 	public Character getCharacter()
 	{
 		return character;
+	}
+	
+	public byte getState()
+	{
+		return state;
+	}
+	
+	public void setState(byte state)
+	{
+		this.state = state;
 	}
 	
 	public int getX()
@@ -42,5 +53,5 @@ public class Player
 	public void incrementX(int i)
 	{
 		this.x += i;
-	}
+	}	
 }

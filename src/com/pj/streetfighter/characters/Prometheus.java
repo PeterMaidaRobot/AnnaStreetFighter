@@ -15,8 +15,12 @@ public class Prometheus extends Character {
 			new BoundingBox(45, 31, 57, 63)
 	};
 	
+	private static Animation[] animations = {
+			new Animation(localSprite, localBoundingBoxes)
+	};
+	
 	public Prometheus()
 	{
-		super(localSprite, localBoundingBoxes);
+		super(animations);
 	}
 }

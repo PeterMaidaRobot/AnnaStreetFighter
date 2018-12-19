@@ -36,7 +36,7 @@ public class FightEngine
 		
 		// check collisions against platforms
 		ArrayList<BoundingBox> p1CollidedPlatforms = getCollisions(p1, stage.getPlatforms());
-		
+		ArrayList<BoundingBox> p2CollidedPlatforms = getCollisions(p2, stage.getPlatforms());
 		
 		// get input
 		
@@ -86,18 +86,15 @@ public class FightEngine
 		packet.p2y = (short) p2.getY();
 		packet.gameStatus = (byte) 1;
 		packet.p1p2health = (byte) 1;
-		packet.p1Sprite = (byte) 1;
-		packet.p2Sprite = (byte) 1;
+		packet.p1Sprite = (byte) 0;
+		packet.p2Sprite = (byte) 0;
 
 		return packet;
 	}
 
 	private ArrayList<BoundingBox> getCollisions(Player p12, BoundingBox[] boxes)
 	{
-		ArrayList<BoundingBox> collisions = new ArrayList<BoundingBox>();
-		
-		
-		
+		ArrayList<BoundingBox> collisions = new ArrayList<BoundingBox>();	
 		return collisions;
 	}
 }
