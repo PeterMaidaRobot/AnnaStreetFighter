@@ -91,7 +91,7 @@ public class FightEngine
 		return packet;
 	}
 
-	private void snapToEdge(Player p, Collision pCollision)
+	public static void snapToEdge(Player p, Collision pCollision)
 	{
 		if (!pCollision.anyCollisions())
 		{
@@ -100,19 +100,19 @@ public class FightEngine
 		
 		if (pCollision.up)
 		{
-			p.setY(p.getY() + pCollision.farthestUp);
+			p.setY(p.getY() + (pCollision.farthestUp + 1));
 		}
 		if (pCollision.down)
 		{
-			p.setY(p.getY() - pCollision.farthestDown);
+			p.setY(p.getY() - (pCollision.farthestDown + 1));
 		}
 		if (pCollision.left)
 		{
-			p.setX(p.getX() + pCollision.farthestLeft);
+			p.setX(p.getX() + (pCollision.farthestLeft + 1));
 		}
 		if (pCollision.right)
 		{
-			p.setX(p.getX() - pCollision.farthestRight);
+			p.setX(p.getX() - (pCollision.farthestRight + 1));
 		}
 	}
 

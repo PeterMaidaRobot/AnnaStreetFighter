@@ -55,10 +55,10 @@ public class Collision
 			ArrayList<BoundingBox> collidedBoxes = pCollisions.get(platform);
 			for (BoundingBox playerBox : collidedBoxes)
 			{
-				int topCollision = playerBox.getTop() - platform.getBottom();	
-				int bottomCollision = platform.getTop() - playerBox.getBottom();
-				int leftCollision = playerBox.getLeft() - platform.getRight();
-				int rightCollision = platform.getLeft() - playerBox.getRight();
+				int topCollision = 		platform.getBottom() - playerBox.getTop();	
+				int bottomCollision = 	playerBox.getBottom() - platform.getTop();
+				int leftCollision = 		platform.getRight() - playerBox.getLeft();
+				int rightCollision = 	playerBox.getRight() - platform.getLeft();
 				
 				// finds the minimum of all collision values
 				int deepest = Math.min(bottomCollision, Math.min(topCollision, Math.min(leftCollision, rightCollision)));
@@ -72,7 +72,8 @@ public class Collision
 				{                           
 					this.addCollision(Collision.BOTTOM, Math.abs(bottomCollision));
 				}
-				else if (leftCollision == deepest)
+				
+				if (leftCollision == deepest)
 				{
 					this.addCollision(Collision.LEFT, Math.abs(leftCollision));
 				}
