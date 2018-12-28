@@ -10,7 +10,7 @@ public class Player
 	private int x, y;
 	
 	public static final double MAX_X_VEL = 3;
-	public static final double MAX_Y_VEL = 7;
+	public static final double MAX_Y_VEL = 9;
 	
 	private double xVel, yVel, xAccel;
 
