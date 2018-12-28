@@ -19,7 +19,7 @@ public class FightEngine
 	public FightEngine(Stage stage)
 	{
 		p1 = new Player(new Prometheus(), 50, 50);
-		p2 = new Player(new Prometheus(), 550, 50);
+		p2 = new Player(new Prometheus(), 500, 50);
 		this.stage = stage;
 	}
 	
@@ -56,15 +56,15 @@ public class FightEngine
 		snapToEdge(p2, p2Collision);
 		
 		
-		
-		if (p1Collision.down && p1.getYVel() > 0)
+		// if on ground and jumping simultaneously, or had upward collision 
+		if ((p1.getYVel() > 0 && p1Collision.down) || (p1.getYVel() < 0 && p1Collision.up))
 		{
 			p1.setYVel(0);
 		}
 		
 		p1.setY((int) Math.ceil(p1.getY() + p1.getYVel()));
 		
-		if (p2Collision.down && p2.getYVel() > 0)
+		if ((p2.getYVel() > 0 && p2Collision.down) || (p2.getYVel() < 0 && p2Collision.up))
 		{
 			p2.setYVel(0);
 		}
