@@ -11,8 +11,9 @@ public class Meadow extends Stage {
 	private static double gravity = 0.25;
 	
 	private static BoundingBox[] localPlatforms = {
-			new BoundingBox(0, 305, 640, 378),
-			new BoundingBox(300, 264, 400, 328)
+			new BoundingBox(96, 320, 544, 378),
+			new BoundingBox(64, 192, 192, 224),
+			new BoundingBox(448, 192, 576, 224)
 	};
 	
 	public Meadow()
