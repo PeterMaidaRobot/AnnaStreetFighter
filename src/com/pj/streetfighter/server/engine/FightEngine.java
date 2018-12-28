@@ -16,17 +16,19 @@ public class FightEngine
 	private Player p2;
 	private Stage stage;
 	
-	private boolean flag = false;
-	
 	public FightEngine(Stage stage)
 	{
-		p1 = new Player(new Prometheus(), 50, 243);
-		p2 = new Player(new Prometheus(), 550, 243);
+		p1 = new Player(new Prometheus(), 50, 50);
+		p2 = new Player(new Prometheus(), 550, 50);
 		this.stage = stage;
 	}
 	
 	public ServerFightPacket updateFight(Object p1Packet, Object p2Packet)
 	{
+		// physics logic
+		applyGravity(p1);
+		applyGravity(p2);
+		
 		// get input
 		boolean p1IsFightPacket = p1Packet instanceof ClientFightPacket;
 		boolean p2IsFightPacket = p2Packet instanceof ClientFightPacket;
@@ -53,16 +55,36 @@ public class FightEngine
 		snapToEdge(p1, p1Collision);
 		snapToEdge(p2, p2Collision);
 		
+		
+		
+		if (p1Collision.down && p1.getYVel() > 0)
+		{
+			p1.setYVel(0);
+		}
+		
+		p1.setY((int) Math.ceil(p1.getY() + p1.getYVel()));
+		
+		if (p2Collision.down && p2.getYVel() > 0)
+		{
+			p2.setYVel(0);
+		}
+		
+		p2.setY((int) Math.ceil(p2.getY() + p2.getYVel()));
+		
 		// perform input based on collisions
 		if (p1IsFightPacket)
 		{
 			if ((p1Input & FightPacketDictionary.LEFT) != 0 && !p1Collision.left)
 			{
-				p1.incrementX(-1);
+				p1.incrementX(-2);
 			} 
 			if ((p1Input & FightPacketDictionary.RIGHT) != 0 && !p1Collision.right)
 			{
-				p1.incrementX(1);
+				p1.incrementX(2);
+			}
+			if ((p1Input & FightPacketDictionary.JUMP) != 0 && p1Collision.down)
+			{
+				p1.setYVel(-1 * Player.MAX_Y_VEL);
 			}
 		}
 		
@@ -70,11 +92,15 @@ public class FightEngine
 		{
 			if ((p2Input & FightPacketDictionary.LEFT) != 0 && !p2Collision.left)
 			{
-				p2.incrementX(-1);
+				p2.incrementX(-2);
 			} 
 			if ((p2Input & FightPacketDictionary.RIGHT) != 0 && !p2Collision.right)
 			{
-				p2.incrementX(1);
+				p2.incrementX(2);
+			}
+			if ((p2Input & FightPacketDictionary.JUMP) != 0 && p2Collision.down)
+			{
+				p2.setYVel(-1 * Player.MAX_Y_VEL);
 			}
 		}
 		
@@ -100,19 +126,19 @@ public class FightEngine
 		
 		if (pCollision.up)
 		{
-			p.setY(p.getY() + (pCollision.farthestUp + 1));
+			p.setY(p.getY() + (pCollision.farthestUp));
 		}
 		if (pCollision.down)
 		{
-			p.setY(p.getY() - (pCollision.farthestDown + 1));
+			p.setY(p.getY() - (pCollision.farthestDown));
 		}
 		if (pCollision.left)
 		{
-			p.setX(p.getX() + (pCollision.farthestLeft + 1));
+			p.setX(p.getX() + (pCollision.farthestLeft));
 		}
 		if (pCollision.right)
 		{
-			p.setX(p.getX() - (pCollision.farthestRight + 1));
+			p.setX(p.getX() - (pCollision.farthestRight));
 		}
 	}
 
@@ -127,7 +153,6 @@ public class FightEngine
 			{
 				if (pBoundingBoxes[i].hasCollided(boundingBoxes[j])) 
 				{
-					System.out.println("collision occurred");
 					if (!collisions.containsKey(boundingBoxes[j]))
 					{
 						collisions.put(boundingBoxes[j], new ArrayList<BoundingBox>());
@@ -138,5 +163,13 @@ public class FightEngine
 		}
 		
 		return collisions;
+	}
+	
+	private void applyGravity(Player p)
+	{
+		// bound it within the MAX_Y_VEL in both positive and negative direction
+		double newYVel = Math.min(Player.MAX_Y_VEL, p.getYVel() + stage.getGravity());
+		newYVel = Math.max(-1 * Player.MAX_Y_VEL, newYVel);
+		p.setYVel(newYVel);
 	}
 }

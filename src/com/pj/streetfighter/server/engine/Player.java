@@ -3,17 +3,25 @@ package com.pj.streetfighter.server.engine;
 import com.pj.streetfighter.characters.Character;
 
 public class Player
-{
+{	
 	private Character character;
 	private byte state;
 	private int animationIndex = 0;
 	private int x, y;
+	
+	public static final double MAX_X_VEL = 3;
+	public static final double MAX_Y_VEL = 7;
+	
+	private double xVel, yVel, xAccel;
 
 	public Player(Character p1Character, int x, int y)
 	{
 		this.character = p1Character;
 		this.x = x;
 		this.y = y;
+		setXVel(0);
+		setYVel(0);
+		setXAccel(0);
 	}
 	
 	public Character getCharacter()
@@ -66,6 +74,36 @@ public class Player
 		this.x += i;
 	}
 	
+	public double getXVel()
+	{
+		return xVel;
+	}
+
+	public void setXVel(double xVel)
+	{
+		this.xVel = xVel;
+	}
+
+	public double getYVel()
+	{
+		return yVel;
+	}
+
+	public void setYVel(double yVel)
+	{
+		this.yVel = yVel;
+	}
+	
+	public double getXAccel()
+	{
+		return xAccel;
+	}
+
+	public void setXAccel(double xAccel)
+	{
+		this.xAccel = xAccel;
+	}
+	
 	public BoundingBox[] getBoundingBoxes()
 	{
 		BoundingBox[] originalBoxes = character.getAnimation(animationIndex).getBoundingBoxes();
@@ -77,7 +115,6 @@ public class Player
 			boundingBoxes[i].addXOffset(x);
 			boundingBoxes[i].addYOffset(y);
 		}
-		System.out.println(boundingBoxes[0].getTop() + ", " + boundingBoxes[0].getLeft());
 		return boundingBoxes;
 	}
 }
