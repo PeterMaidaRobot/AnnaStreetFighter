@@ -5,7 +5,7 @@ import com.pj.streetfighter.characters.Character;
 public class Player
 {	
 	private Character character;
-	private byte state;
+	private State state = new State();
 	private int animationIndex = 0;
 	private int x, y;
 	
@@ -29,12 +29,12 @@ public class Player
 		return character;
 	}
 	
-	public byte getState()
+	public short getState()
 	{
-		return state;
+		return state.value;
 	}
 	
-	public void setState(byte state)
+	public void setState(State state)
 	{
 		this.state = state;
 	}
@@ -116,5 +116,86 @@ public class Player
 			boundingBoxes[i].addYOffset(y);
 		}
 		return boundingBoxes;
+	}
+	
+	private class State 
+	{
+		public static final byte IDLE = 0b000;
+		public static final byte RUNNING = 0b001;
+		//public static final byte JUMPING = 0b010;
+		public static final byte PUNCHING = 0b011;
+		public static final byte KICKING = 0b100;
+		public static final byte BLOCKING = 0b101;
+		public static final byte GOT_HIT = 0b110;
+		public static final byte KNOCKED_OUT = 0b111;
+		
+		public static final short FACE_RIGHT = 	0b00000001;
+		public static final short JUMPING =		0b00000010;
+		public static final short FALLING = 		0b00000100;
+		
+		
+		private short value = 0b00000000;	
+		
+		public State()
+		{
+			value = (short) (State.IDLE | State.FALLING);
+		}
+	}
+
+	public boolean isAirborne()
+	{
+		return ((this.state.value & State.JUMPING) == State.JUMPING) || 
+				((this.state.value & State.FALLING) == State.FALLING);
+	}
+	
+	
+	public boolean isFacingRight()
+	{
+		return ((this.state.value & State.FACE_RIGHT) == State.FACE_RIGHT);
+	}
+	
+	public boolean isGrounded()
+	{
+		return !(isJumping() || isFalling());
+	}
+	
+	public void setGrounded() 
+	{
+		if (yVel != 0) {
+			yVel = 0;
+		}
+		
+		this.state.value &= ~State.JUMPING;
+		this.state.value &= ~State.FALLING;
+	}
+	
+	public boolean isJumping()
+	{
+		return ((this.state.value & State.JUMPING) == State.JUMPING);
+	}
+	
+	public void setJumping()
+	{
+		if (yVel == 0) {
+			setYVel(-1 * Player.MAX_Y_VEL);
+		}
+		
+		this.state.value |= State.JUMPING;
+		this.state.value &= ~State.FALLING;
+	}
+	
+	public boolean isFalling()
+	{
+		return ((this.state.value & State.FALLING) == State.FALLING);
+	}
+	
+	public void setFalling()
+	{
+		if (yVel < 0) {
+			setYVel(0);
+		}
+		
+		this.state.value |= State.FALLING;
+		this.state.value &= ~State.JUMPING;
 	}
 }

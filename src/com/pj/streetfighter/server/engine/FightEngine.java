@@ -25,10 +25,6 @@ public class FightEngine
 	
 	public ServerFightPacket updateFight(Object p1Packet, Object p2Packet)
 	{
-		// physics logic
-		applyGravity(p1);
-		applyGravity(p2);
-		
 		// get input
 		boolean p1IsFightPacket = p1Packet instanceof ClientFightPacket;
 		boolean p2IsFightPacket = p2Packet instanceof ClientFightPacket;
@@ -56,52 +52,22 @@ public class FightEngine
 		snapToEdge(p2, p2Collision);
 		
 		
-		// if on ground and jumping simultaneously, or had upward collision 
-		if ((p1.getYVel() > 0 && p1Collision.down) || (p1.getYVel() < 0 && p1Collision.up))
-		{
-			p1.setYVel(0);
-		}
+		// UPDATE STATE OBJECT
+		updateState(p1, p1Collision);
+		updateState(p2, p2Collision);
 		
 		p1.setY((int) Math.ceil(p1.getY() + p1.getYVel()));
-		
-		if ((p2.getYVel() > 0 && p2Collision.down) || (p2.getYVel() < 0 && p2Collision.up))
-		{
-			p2.setYVel(0);
-		}
-		
 		p2.setY((int) Math.ceil(p2.getY() + p2.getYVel()));
 		
 		// perform input based on collisions
 		if (p1IsFightPacket)
 		{
-			if ((p1Input & FightPacketDictionary.LEFT) != 0 && !p1Collision.left)
-			{
-				p1.incrementX(-2);
-			} 
-			if ((p1Input & FightPacketDictionary.RIGHT) != 0 && !p1Collision.right)
-			{
-				p1.incrementX(2);
-			}
-			if ((p1Input & FightPacketDictionary.JUMP) != 0 && p1Collision.down)
-			{
-				p1.setYVel(-1 * Player.MAX_Y_VEL);
-			}
+			applyPlayerInput(p1, p1Collision, p1Input);
 		}
 		
 		if (p2IsFightPacket)
 		{
-			if ((p2Input & FightPacketDictionary.LEFT) != 0 && !p2Collision.left)
-			{
-				p2.incrementX(-2);
-			} 
-			if ((p2Input & FightPacketDictionary.RIGHT) != 0 && !p2Collision.right)
-			{
-				p2.incrementX(2);
-			}
-			if ((p2Input & FightPacketDictionary.JUMP) != 0 && p2Collision.down)
-			{
-				p2.setYVel(-1 * Player.MAX_Y_VEL);
-			}
+			applyPlayerInput(p2, p2Collision, p2Input);
 		}
 		
 		ServerFightPacket packet = new ServerFightPacket();
@@ -117,7 +83,7 @@ public class FightEngine
 		return packet;
 	}
 
-	public static void snapToEdge(Player p, Collision pCollision)
+	public void snapToEdge(Player p, Collision pCollision)
 	{
 		if (!pCollision.anyCollisions())
 		{
@@ -170,6 +136,52 @@ public class FightEngine
 		// bound it within the MAX_Y_VEL in both positive and negative direction
 		double newYVel = Math.min(Player.MAX_Y_VEL, p.getYVel() + stage.getGravity());
 		newYVel = Math.max(-1 * Player.MAX_Y_VEL, newYVel);
+		
+		if (newYVel >= 0 && p.isJumping()) {
+			p.setFalling();
+		}
+		
 		p.setYVel(newYVel);
+	}
+	
+	private void updateState(Player p, Collision pCollision)
+	{
+		if (pCollision.down && p.isFalling()) 
+		{
+			p.setGrounded();
+		}
+		
+		// if the player is in the sky and they did not jump
+		// (the engine hasn't recognized it yet)
+		if (!pCollision.down && !p.isAirborne())
+		{
+			p.setFalling();
+		}
+		
+		if (p.isAirborne()) {
+			applyGravity(p);
+		}
+		
+		// jumping is going upwards (vel < 0), falling is going downwards (vel > 0)
+		if (pCollision.up && p.isJumping()) 
+		{
+			p.setFalling();
+		}
+	}
+	
+	private void applyPlayerInput(Player p, Collision pCollision, short pInput)
+	{
+		if ((pInput & FightPacketDictionary.LEFT) != 0 && !pCollision.left)
+		{
+			p.incrementX(p.getCharacter().getBaseSpeed() * -1);
+		} 
+		if ((pInput & FightPacketDictionary.RIGHT) != 0 && !pCollision.right)
+		{
+			p.incrementX(p.getCharacter().getBaseSpeed());
+		}
+		if ((pInput & FightPacketDictionary.JUMP) != 0 && pCollision.down)
+		{
+			p.setJumping();
+		}
 	}
 }

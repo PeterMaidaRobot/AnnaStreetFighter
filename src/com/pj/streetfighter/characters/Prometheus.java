@@ -8,6 +8,7 @@ public class Prometheus extends Character {
 	
 	private static SpriteSheet localSheet = new SpriteSheet("/character_sprites/prometheus.png", 64);
 	private static Sprite localSprite = new Sprite(64, 64, 0, 0, localSheet);
+	private static int baseSpeed = 2;
 	
 	private static BoundingBox[] localBoundingBoxes = {
 			new BoundingBox(13, 2, 44, 41),
@@ -21,6 +22,6 @@ public class Prometheus extends Character {
 	
 	public Prometheus()
 	{
-		super(animations);
+		super(animations, baseSpeed);
 	}
 }
