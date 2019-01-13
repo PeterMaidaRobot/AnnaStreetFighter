@@ -54,43 +54,28 @@ public class Bitmap
 		// insert the given sprite into the bitmap's pixels array
 		for (int yy = y; yy < y + sprite.getYSIZE(); yy++)
 		{
-			if (flipped)
+			for (int xx = x; xx < x + sprite.getXSIZE(); xx++)
 			{
-				for (int xx = x + sprite.getXSIZE(); xx > x; xx--)
+				// do not store an off screen pixel
+				if (yy < 0 || yy >= height || xx < 0 || xx >= width)
 				{
-					// do not store an off screen pixel
-					if (yy < 0 || yy >= height || xx < 0 || xx >= width)
-					{
-						continue;
-					}
-					// do not store this "transparent" pixel color in the array
-					if (sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] == 0xFFFF00FF)
-					{
-						continue;
-					}
-					
-					pixels[xx + yy * width] = sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] | overlay;
+					continue;
 				}
-			}
-			else
-			{
-				for (int xx = x; xx < x + sprite.getXSIZE(); xx++)
+
+				int pixelCol = (xx - x);
+				if (flipped) 
 				{
-					// do not store an off screen pixel
-					if (yy < 0 || yy >= height || xx < 0 || xx >= width)
-					{
-						continue;
-					}
-					// do not store this "transparent" pixel color in the array
-					if (sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] == 0xFFFF00FF)
-					{
-						continue;
-					}
-					
-					pixels[xx + yy * width] = sprite.pixels[(xx - x) + (yy - y) * sprite.getXSIZE()] | overlay;
+					pixelCol = (sprite.getXSIZE() - (xx - x) - 1);
 				}
+
+				// do not store this "transparent" pixel color in the array
+				if (sprite.pixels[pixelCol + (yy - y) * sprite.getXSIZE()] == 0xFFFF00FF)
+				{
+					continue;
+				}
+
+				pixels[xx + yy * width] = sprite.pixels[pixelCol + (yy - y) * sprite.getXSIZE()] | overlay;
 			}
-			
 		}
 	}
 	/*
