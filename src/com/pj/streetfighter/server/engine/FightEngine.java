@@ -18,8 +18,8 @@ public class FightEngine
 	
 	public FightEngine(Stage stage)
 	{
-		p1 = new Player(new Prometheus(), 50, 50);
-		p2 = new Player(new Prometheus(), 500, 50);
+		p1 = new Player(new Prometheus(), 50, 50, true);
+		p2 = new Player(new Prometheus(), 500, 50, false);
 		this.stage = stage;
 	}
 	
@@ -51,10 +51,23 @@ public class FightEngine
 		snapToEdge(p1, p1Collision);
 		snapToEdge(p2, p2Collision);
 		
-		
 		// UPDATE STATE OBJECT
 		updateState(p1, p1Collision);
 		updateState(p2, p2Collision);
+		
+		// NOT FINAL - PLS DELETE
+		if (p1.getY() > 400) {
+			p1.setY(-100);
+			p1.setX(50);
+			p1.setYVel(0);
+		}
+		
+		// NOT FINAL - PLS DELETE
+		if (p2.getY() > 400) {
+			p2.setY(-100);
+			p2.setX(500);
+			p2.setYVel(0);
+		}
 		
 		p1.setY((int) Math.ceil(p1.getY() + p1.getYVel()));
 		p2.setY((int) Math.ceil(p2.getY() + p2.getYVel()));

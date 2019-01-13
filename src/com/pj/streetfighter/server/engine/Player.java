@@ -14,7 +14,7 @@ public class Player
 	
 	private double xVel, yVel, xAccel;
 
-	public Player(Character p1Character, int x, int y)
+	public Player(Character p1Character, int x, int y, boolean facingRight)
 	{
 		this.character = p1Character;
 		this.x = x;
@@ -22,6 +22,7 @@ public class Player
 		setXVel(0);
 		setYVel(0);
 		setXAccel(0);
+		setFacingRight(facingRight);
 	}
 	
 	public Character getCharacter()

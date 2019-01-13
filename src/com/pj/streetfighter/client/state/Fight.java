@@ -15,8 +15,8 @@ public class Fight extends GameState{
 
 	Stage stage = new Meadow();
 	
-	Player player1 = new Player(new Prometheus(), 0, 0);
-	Player player2 = new Player(new Prometheus(), 0, 0);
+	Player player1 = new Player(new Prometheus(), 0, 0, true);
+	Player player2 = new Player(new Prometheus(), 0, 0, false);
 	int p1Sprite = 0;
 	int p2Sprite = 0;
 	
