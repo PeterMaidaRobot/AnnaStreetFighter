@@ -75,6 +75,8 @@ public class Fight extends GameState{
 			player2.setY(packet.p2y);
 			p1Sprite = packet.p1Sprite;
 			p2Sprite = packet.p2Sprite;
+			player1.setFacingRight(packet.p1facingRight);
+			player2.setFacingRight(packet.p2facingRight);
 		}
 		
 	}
@@ -86,12 +88,14 @@ public class Fight extends GameState{
 		map.drawSprite(
 				player1.getCharacter().getAnimation(p1Sprite).getSprite(), 
 				player1.getX(), 
-				player1.getY()
+				player1.getY(),
+				!player1.isFacingRight()
 		);
 		map.drawSprite(
 				player2.getCharacter().getAnimation(p2Sprite).getSprite(), 
 				player2.getX(), 
-				player2.getY()
+				player2.getY(),
+				!player2.isFacingRight()
 		);
 		
 	}

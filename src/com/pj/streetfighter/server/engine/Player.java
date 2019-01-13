@@ -131,7 +131,7 @@ public class Player
 		
 		public static final short FACE_RIGHT = 	0b00000001;
 		public static final short JUMPING =		0b00000010;
-		public static final short FALLING = 		0b00000100;
+		public static final short FALLING = 	0b00000100;
 		
 		
 		private short value = 0b00000000;	
@@ -142,17 +142,29 @@ public class Player
 		}
 	}
 
+	public boolean isFacingRight()
+	{
+		return ((this.state.value & State.FACE_RIGHT) == State.FACE_RIGHT);
+	}
+	
+	public void setFacingRight(boolean facingRight)
+	{
+		if (facingRight)
+		{
+			this.state.value |= State.FACE_RIGHT;
+		}
+		else
+		{
+			this.state.value &= ~State.FACE_RIGHT;
+		}
+	}
+	
 	public boolean isAirborne()
 	{
 		return ((this.state.value & State.JUMPING) == State.JUMPING) || 
 				((this.state.value & State.FALLING) == State.FALLING);
 	}
 	
-	
-	public boolean isFacingRight()
-	{
-		return ((this.state.value & State.FACE_RIGHT) == State.FACE_RIGHT);
-	}
 	
 	public boolean isGrounded()
 	{

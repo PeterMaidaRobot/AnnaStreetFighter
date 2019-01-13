@@ -10,4 +10,6 @@ public class ServerFightPacket
 	public short p2x;
 	public short p2y;
 	public short p1p2health;
+	public boolean p1facingRight;
+	public boolean p2facingRight;
 }

@@ -79,6 +79,8 @@ public class FightEngine
 		packet.p1p2health = (byte) 1;
 		packet.p1Sprite = (byte) 0;
 		packet.p2Sprite = (byte) 0;
+		packet.p1facingRight = p1.isFacingRight();
+		packet.p2facingRight = p2.isFacingRight();
 
 		return packet;
 	}
@@ -173,10 +175,12 @@ public class FightEngine
 	{
 		if ((pInput & FightPacketDictionary.LEFT) != 0 && !pCollision.left)
 		{
+			p.setFacingRight(false);
 			p.incrementX(p.getCharacter().getBaseSpeed() * -1);
 		} 
 		if ((pInput & FightPacketDictionary.RIGHT) != 0 && !pCollision.right)
 		{
+			p.setFacingRight(true);
 			p.incrementX(p.getCharacter().getBaseSpeed());
 		}
 		if ((pInput & FightPacketDictionary.JUMP) != 0 && pCollision.down)
