@@ -161,12 +161,15 @@ public class Player
 	
 	public void setGrounded() 
 	{
-		if (yVel != 0) {
-			yVel = 0;
+		if (!isGrounded())
+		{
+			if (yVel != 0) {
+				yVel = 0;
+			}
+			
+			this.state.value &= ~State.JUMPING;
+			this.state.value &= ~State.FALLING;
 		}
-		
-		this.state.value &= ~State.JUMPING;
-		this.state.value &= ~State.FALLING;
 	}
 	
 	public boolean isJumping()
@@ -176,12 +179,15 @@ public class Player
 	
 	public void setJumping()
 	{
-		if (yVel == 0) {
-			setYVel(-1 * Player.MAX_Y_VEL);
+		if (!isJumping())
+		{
+			if (yVel == 0) {
+				setYVel(-1 * Player.MAX_Y_VEL);
+			}
+			
+			this.state.value |= State.JUMPING;
+			this.state.value &= ~State.FALLING;
 		}
-		
-		this.state.value |= State.JUMPING;
-		this.state.value &= ~State.FALLING;
 	}
 	
 	public boolean isFalling()
@@ -191,11 +197,14 @@ public class Player
 	
 	public void setFalling()
 	{
-		if (yVel < 0) {
-			setYVel(0);
+		if (!isFalling())
+		{
+			if (yVel < 0) {
+				setYVel(0);
+			}
+			
+			this.state.value |= State.FALLING;
+			this.state.value &= ~State.JUMPING;
 		}
-		
-		this.state.value |= State.FALLING;
-		this.state.value &= ~State.JUMPING;
 	}
 }
